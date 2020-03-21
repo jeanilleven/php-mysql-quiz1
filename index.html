@@ -19,7 +19,7 @@
             <span style="color:#07500b; " id="user-id">18400175</span>
           </a>
           <span class="dropdown-menu" aria-labelledby="user-dropdown">
-            <a class="dropdown-item" data-toggle="modal" data-target="#change-pw-modal" type="button2">Change Password</a>
+            <a class="dropdown-item" data-toggle="modal" data-target="#change-pw-modal" type="button" style="cursor:pointer">Change Password</a>
             <a class="dropdown-item" href="#">Logout</a>
           </span>
         </span>
@@ -67,18 +67,37 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+              <h5 class="modal-title" id="">Change Password</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
           <div class="modal-body">
-        ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+            <form>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="old_pw"><i class='fas fa-lock'></i></span>
+                </div>
+                <input name="old-pw" type="password" class="form-control" placeholder="Old Password" aria-label="Old Password" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="old_pw"><i class='fas fa-lock'></i></span>
+                </div>
+                <input name="new-pw" type="password" class="form-control" placeholder="New Password" aria-label="pw1" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="old_pw"><i class='fas fa-lock'></i></span>
+                </div>
+                <input name="pw2" type="password" class="form-control" placeholder="Confirm Password" aria-label="pw2" aria-describedby="basic-addon1">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
         </div>
       </div>
     </div>
@@ -94,4 +113,8 @@
 
   $('#user-dropdown').css("background-color", "#f8f9fa");
   $('#user-dropdown').css("border", "none");
+
+  $('a').on("click", ()=>{
+    $('this').css("background-color", "#a1a7ad");
+  })
 </script>
