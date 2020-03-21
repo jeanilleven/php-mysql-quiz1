@@ -25,6 +25,11 @@
                     <form action="account.php" method="POST">
                         <div class="container">
                             <table class="col-lg-12 mt-4">
+                                <!-- 
+                                    /**
+                                    *TODO: index.php/?err=1 fails when submiting form 
+                                    */
+                                 -->
                                 <tr>
                                     <td class="pt-2"><label for="account_type">Account Type</label></td>
                                     <td>
