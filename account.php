@@ -5,7 +5,7 @@
 
     if(isset($_GET['end']) && $_GET['end'] == true){
         session_destroy();
-        header('Location: index.php');
+        header('Location: http://localhost/php-mysql-quiz1/index.php');
     }
 
     // these $_SESSION variables are available for use in the admin.php, students.php and faculty.php
@@ -31,7 +31,7 @@
             // source php will be included/copy-pasted here which means the $_SESSION variables above are accessible
             include $_SESSION['account_type'].'.php';
         }else{
-            header('Location: index.php/?err=1');
+            header('Location: http://localhost/php-mysql-quiz1/index.php/?err=1');
         }
     }
 

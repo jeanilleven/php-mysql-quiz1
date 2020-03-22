@@ -19,10 +19,10 @@
                     <h1>Login</h1>
                     <?php if(isset($_GET['err'])):?>
                             <?php if($_GET['err'] == 1):?>
-                                <p class='text-danger'>*account not found</p>
+                                <p class='text-danger'>* account not found</p>
                             <?php endif ?>
                         <?php endif ?>
-                    <form action="account.php" method="POST">
+                    <form action="http://localhost/php-mysql-quiz1/account.php" method="POST">
                         <div class="container">
                             <table class="col-lg-12 mt-4">
                                 <!-- 
