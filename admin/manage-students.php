@@ -39,24 +39,24 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="fname"><i class='fas fa-user-alt'></i></span>
                             </div>
-                            <input name="fname" type="text" class="form-control" placeholder="First Name" aria-label="fname" aria-describedby="basic-addon1">
+                            <input required name="fname" type="text" class="form-control" placeholder="First Name" aria-label="fname" aria-describedby="basic-addon1">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="lname"><i class='fas fa-user-alt'></i></span>
                             </div>
-                            <input name="lname" type="text" class="form-control" placeholder="Last Name" aria-label="lname" aria-describedby="basic-addon1">
+                            <input required name="lname" type="text" class="form-control" placeholder="Last Name" aria-label="lname" aria-describedby="basic-addon1">
                           </div>
                           <div class="input-group mb-3" >
                             <div class="input-group-prepend" >
                               <span class="input-group-text" id="gender"><i class='	fa fa-venus-mars'></i></span>
                             </div>
                             <div class="form-check form-check-inline" style="margin-right: 4px;">
-                              <input name="gender"class="form-check-input" type="radio"  value="Male">
+                              <input required name="gender"class="form-check-input" type="radio"  value="Male">
                               <label class="form-check-label" for="inlineCheckbox1">Male</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input name="gender" class="form-check-input" type="radio" value="Female">
+                              <input required  name="gender" class="form-check-input" type="radio" value="Female">
                               <label class="form-check-label" for="inlineCheckbox2">Female</label>
                             </div>
                           </div>
@@ -64,8 +64,8 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="start_term"><i class='fas fa-graduation-cap'></i></span>
                             </div>
-                            <select name="course" class="form-control">
-                              <option value="null">Programme</option>
+                            <select required  name="course" class="form-control">
+                              <option value="">Programme</option>
                               <option value="Computer Science">Computer Science</option>
                               <option value="Information Science">Information Science</option>
                               <option value="Information Technology">Information Technology</option>
@@ -74,8 +74,8 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="start_term"><i class='far fa-calendar-times'></i></span>
                             </div>
-                            <select name="year" class="form-control">
-                              <option value="null">Year Level</option>
+                            <select required name="year" class="form-control">
+                              <option value="">Year Level</option>
                               <option value="1">First Year</option>
                               <option value="2">Second Year</option>
                               <option value="3">Third Year</option>
@@ -104,7 +104,7 @@
                   <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Course</th>
+                    <th scope="col">Program</th>
                     <th scope="col">Year</th>
                     <th></th>
                     <th></th>

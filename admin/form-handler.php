@@ -83,4 +83,13 @@
 
         header('location:enrollment-subjects.php');
     }
+
+    // Enrollment - Subject Offerings Functions
+
+    function addSubjOffering($subject, $room, $conn){
+        $query = "INSERT INTO offered_subjects(room_id, subject_id, created_at) VALUES('$room', '$subject', now())";
+        mysqli_query($conn, $query);
+
+        header("location: enrollment-subject-offerings.php");
+    }
 ?>
