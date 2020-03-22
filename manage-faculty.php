@@ -56,9 +56,9 @@
                 Enrollment
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Student Enrollment</a>
-                <a class="dropdown-item" href="#">Subjects</a>
-                <a class="dropdown-item" href="#">Subject-Offerings</a>
+                <a class="dropdown-item" href="enrollment-student.php">Student Enrollment</a>
+                <a class="dropdown-item" href="enrollment-subjects.php">Subjects</a>
+                <a class="dropdown-item" href="enrollment-subject-offerings.php">Subject-Offerings</a>
               </div>
             </li>
         </div>
@@ -69,7 +69,7 @@
 
       <!-- CHANGE PASSWORD MODAL -->
       <div class="modal fade" id="change-pw-modal" tabindex="-1" role="dialog" aria-labelledby="change-pw-moda" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="">Change Password</h5>
@@ -100,7 +100,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-success">Save changes</button>
             </div>
             </form>
         </div>
@@ -114,7 +114,7 @@
                 <h1>FACULTY</h1>
             </div>
             <div class="col-lg-6 col-sm-6 col-xs-6">
-                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-faculty-modal">
+                <button style="float:right;"type="button" class="btn btn-success" data-toggle="modal" data-target="#add-faculty-modal">
                     Add Faculty
                 </button>
                   
@@ -182,7 +182,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary">Add</button>
+                          <button type="submit" class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
@@ -190,7 +190,70 @@
                   </div>
             </div>
           </div>
-      </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="table-card">
+                <div class="card-body">
+                  <table class="table">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Start Year</th>
+                        <th scope="col">Start Term</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark Otto</td>
+                        <td>2019</td>
+                        <td>First Semester</td>
+                        <td></td>
+                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-faculty-modal">
+                              <i class='far fa-trash-alt'></i>
+                            </button></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Keenan Mendiola</td>
+                        <td>2019</td>
+                        <td>First Semester</td>
+                        <td></td>
+                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-faculty-modal">
+                              <i class='far fa-trash-alt'></i>
+                            </button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="delete-faculty-modal" tabindex="-1" role="dialog" aria-labelledby="delete-faculty-modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this Faculty staff?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <form action="manage-faculty.php" method="get">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger">Remove</button>
+                    </form>
+                  </div>
+                  </div>
+                </div>
+              </div>          
+            </div>
       
   </body>
      

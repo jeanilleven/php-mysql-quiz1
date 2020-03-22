@@ -56,9 +56,9 @@
                 Enrollment
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Student Enrollment</a>
-                <a class="dropdown-item" href="#">Subjects</a>
-                <a class="dropdown-item" href="#">Subject-Offerings</a>
+                <a class="dropdown-item" href="enrollment-student.php">Student Enrollment</a>
+                <a class="dropdown-item" href="enrollment-subjects.php">Subjects</a>
+                <a class="dropdown-item" href="enrollment-subject-offerings.php">Subject-Offerings</a>
               </div>
             </li>
         </div>
@@ -69,7 +69,7 @@
 
       <!-- CHANGE PASSWORD MODAL -->
       <div class="modal fade" id="change-pw-modal" tabindex="-1" role="dialog" aria-labelledby="change-pw-moda" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="">Change Password</h5>
@@ -100,7 +100,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-success">Save changes</button>
             </div>
             </form>
         </div>
@@ -114,7 +114,7 @@
                 <h1>STUDENTS</h1>
             </div>
             <div class="col-lg-6 col-sm-6 col-xs-6">
-                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-student-modal">
+                <button style="float:right;"type="button" class="btn btn-success" data-toggle="modal" data-target="#add-student-modal">
                     Add Student
                 </button>
                   
@@ -181,7 +181,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary">Add</button>
+                          <button type="submit" class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
