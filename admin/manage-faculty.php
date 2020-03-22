@@ -115,12 +115,12 @@
                     </thead>
                     <tbody>
                     <?php
-                        $faculty = mysqli_query($conn, "select * from faculty ");
+                        $faculty = mysqli_query($conn, "select * from faculty order by last_name asc");
                         foreach($faculty as $f){
                           if($f['deleted_at']==null || $f['deleted_at']=='0000-00-00'){
                             echo "
                               <tr id='F".$f['id']."'>
-                                <td style=' text-align: left;'>".$f['id']."</td>
+                                <th scope='col' style=' text-align: left;'>".$f['id']."</th>
                                 <td style=' text-align: left;'>".$f['first_name']." ".$f['last_name']."</td>
                                 <td style=' text-align: left;'>".$f['start_year']."</td>
                                 <td style=' text-align: left;'>".$f['start_term']."</td>
