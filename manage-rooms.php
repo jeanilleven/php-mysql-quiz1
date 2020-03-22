@@ -1,3 +1,8 @@
+<?php
+  require 'connect_to_db.php';
+?>
+
+
 <!doctype html>
 <html>
     <head>
@@ -41,7 +46,7 @@
                 Manage
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Faculty</a>
+                <a class="dropdown-item" href="manage-faculty.html">Faculty</a>
                 <a class="dropdown-item" href="manage-students.html">Students</a>
                 <a class="dropdown-item" href="#">Rooms</a>
               </div>
@@ -106,36 +111,70 @@
       <div class="container" style="margin-top: 20px;">
           <div class="row">
             <div class="col-lg-6">
-                <h1>FACULTY</h1>
+                <h1>ROOMS</h1>
             </div>
             <div class="col-lg-6">
-                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-faculty-modal">
-                    Add Faculty
+                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-room-modal">
+                    Add Room
                 </button>
                   
-                  <!-- Add Faculty Modal -->
-                  <div class="modal fade" id="add-faculty-modal" tabindex="-1" role="dialog" aria-labelledby="add-faculty-modal" aria-hidden="true">
+                  <!-- Add Room Modal -->
+                  <div class="modal fade" id="add-room-modal" tabindex="-1" role="dialog" aria-labelledby="add-room-modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="add-faculty-modal">Add Faculty</h5>
+                          <h5 class="modal-title" id="add-room-modal">Add Room</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
-                          ...
+                        <form action="manage-rooms.php" method="get">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="name"><i class='fas fa-door-open'></i></span>
+                            </div>
+                            <input name="name" type="text" class="form-control" placeholder="Room Name" aria-label="name" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="capacity"><i class='fas fa-users'></i></span>
+                            </div>
+                            <input name="capacity" min=0 type="number" class="form-control" placeholder="Capacity" aria-label="capacity" aria-describedby="basic-addon1">
+                          </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                           <button type="button" class="btn btn-primary">Add</button>
                         </div>
+                        </form>
                       </div>
                     </div>
                   </div>
             </div>
           </div>
       </div>
+
+      <!-- ADD ROOM -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
       
   </body>
      
@@ -149,7 +188,5 @@
   $('#user-dropdown').css("background-color", "#f8f9fa");
   $('#user-dropdown').css("border", "none");
 
-  $('a').on("click", ()=>{
-    $('this').css("background-color", "#a1a7ad");
-  })
+
 </script>

@@ -45,9 +45,9 @@
                 Manage
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="manage-faculty.php">Faculty</a>
+                <a class="dropdown-item" href="#">Faculty</a>
                 <a class="dropdown-item" href="manage-students.php">Students</a>
-                <a class="dropdown-item" href="manage-rooms.php">Rooms</a>
+                <a class="dropdown-item" href="manage-students.php">Rooms</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -107,6 +107,90 @@
       </div>
 
 
+      <div class="container" style="margin-top: 20px;">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-6">
+                <h1>FACULTY</h1>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-6">
+                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-faculty-modal">
+                    Add Faculty
+                </button>
+                  
+                  <!-- Add Faculty Modal -->
+                  <div class="modal fade" id="add-faculty-modal" tabindex="-1" role="dialog" aria-labelledby="add-faculty-modal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="add-faculty-modal">Add Faculty</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <form action="manage-faculty.php" method="get">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="fname"><i class='fas fa-user-alt'></i></span>
+                            </div>
+                            <input name="fname" type="text" class="form-control" placeholder="First Name" aria-label="fname" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="lname"><i class='fas fa-user-alt'></i></span>
+                            </div>
+                            <input name="lname" type="text" class="form-control" placeholder="Last Name" aria-label="lname" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="email"><i class='far fa-envelope'></i></span>
+                            </div>
+                            <input name="email" type="email" class="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3" >
+                            <div class="input-group-prepend" >
+                              <span class="input-group-text" id="gender"><i class='	fa fa-venus-mars'></i></span>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-right: 4px;">
+                              <input name="gender"class="form-check-input" type="radio"  value="Male">
+                              <label class="form-check-label" for="inlineCheckbox1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input name="gender" class="form-check-input" type="radio" value="Female">
+                              <label class="form-check-label" for="inlineCheckbox2">Female</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text" id="start_term"><i class='far fa-calendar-alt'></i></span>
+                            </div>
+                            <select name="year" class="form-control">
+                              <option value="null">Start Year</option>
+                              <option value="2019">2019</option>
+                              <option value="2020">2020</option>
+                            </select>
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="start_term"><i class='far fa-clock'></i></span>
+                            </div>
+                            <select name="term" class="form-control">
+                              <option value="null">Start Term</option>
+                              <option value="First Semester">First Semester</option>
+                              <option value="Second Semester">Second Semester</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+      </div>
+      
   </body>
      
 </html>
@@ -118,4 +202,6 @@
 
   $('#user-dropdown').css("background-color", "#f8f9fa");
   $('#user-dropdown').css("border", "none");
+
+  $('.form-check-inline .form-check-input').css("margin-left", "0.5rem");
 </script>
