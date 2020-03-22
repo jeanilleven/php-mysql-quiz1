@@ -15,10 +15,10 @@
         </head>
         <body>
           <nav id='header' style='background-color: #f8f9fa;'>
-            <img id='navbar-pic' height='50' src='pics/nav-logo.png' style='margin-left: 50px;'>
+            <img id='navbar-pic' height='50' src='../pics/nav-logo.png' style='margin-left: 50px;'>
             <span  style='color:#07500b; ' class='dropdown'>
               <a style='box-shadow:none;'id='user-dropdown' class='btn btn-secondary dropdown-toggle' href='#' role='button' id='user-dropdown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                <img id='user-icon' style='border-radius: 50%; border: 1px solid gray;' src='pics/man-icon.png' alt='icon'>
+                <img id='user-icon' style='border-radius: 50%; border: 1px solid gray;' src='../pics/man-icon.png' alt='icon'>
                 <span style='color:#07500b; ' id='user-id'>18400175</span>
               </a>
               <span class='dropdown-menu' aria-labelledby='user-dropdown'>

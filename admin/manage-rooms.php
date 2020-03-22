@@ -22,10 +22,10 @@
       ?>
       <div class="container" style="margin-top: 20px; padding-bottom: 20px;">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-sm-6 col-xs-6">
                 <h1>ROOMS</h1>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-sm-6 col-xs-6">
                 <button style="float:right;"type="button" class="btn btn-success" data-toggle="modal" data-target="#add-room-modal">
                     Add Room
                 </button>
@@ -66,14 +66,14 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
               <div class="table-card">
                 <div class="card-body">
-                  <table class="table " style="width: 80%; margin: auto;">
+                  <table class="table " style="width: 70%; margin: auto;">
                     <thead class="thead-light">
                       <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Capacity</th>
+                        <th style=' text-align: center;' scope="col">Name</th>
+                        <th style=' text-align: center;'scope="col">Capacity</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -84,9 +84,9 @@
                           if($r['deleted_at']==null){
                             echo "
                             <tr id='R".$r['id']."'>
-                              <td>".$r['name']."</td>
-                              <td>".$r['capacity']."</td>
-                              <td><button onclick='getID(this.id)' value='".$r['id']."' id='R".$r['id']."' style='margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
+                              <td style=' text-align: center;'>".$r['name']."</td>
+                              <td style=' text-align: center;'>".$r['capacity']."</td>
+                              <td style=' text-align: right;'><button onclick='getID(this.id)' value='".$r['id']."' id='R".$r['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
                                   <i class='fas fa-pencil-alt'></i></button>
                                   <button onclick='getID(this.id)' id='R".$r['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-room-modal'>
                                   <i class='far fa-trash-alt'></i></button>
