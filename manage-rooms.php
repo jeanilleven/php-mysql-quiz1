@@ -57,9 +57,9 @@
                 Enrollment
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Student Enrollment</a>
-                <a class="dropdown-item" href="#">Subjects</a>
-                <a class="dropdown-item" href="#">Subject-Offerings</a>
+                <a class="dropdown-item" href="enrollment-student.php">Student Enrollment</a>
+                <a class="dropdown-item" href="enrollment-subjects.php">Subjects</a>
+                <a class="dropdown-item" href="enrollment-subject-offerings.php">Subject-Offerings</a>
               </div>
             </li>
         </div>
@@ -70,7 +70,7 @@
 
       <!-- CHANGE PASSWORD MODAL -->
       <div class="modal fade" id="change-pw-modal" tabindex="-1" role="dialog" aria-labelledby="change-pw-moda" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog " role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="">Change Password</h5>

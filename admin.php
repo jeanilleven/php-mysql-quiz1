@@ -18,7 +18,7 @@
       <nav id="header" style="background-color: #f8f9fa;">
         <img id="navbar-pic" height="50" src="pics/nav-logo.png" style="margin-left: 50px;">
         <span  style="color:#07500b; " class="dropdown">
-          <a style="box-shadow:none;"id="user-dropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a style="box-shadow:none;" id="user-dropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img id="user-icon" style="border-radius: 50%; border: 1px solid gray;" src="pics/man-icon.png" alt="icon">
             <span style="color:#07500b; " id="user-id">18400175</span>
           </a>
@@ -68,7 +68,7 @@
 
       <!-- CHANGE PASSWORD MODAL -->
       <div class="modal fade" id="change-pw-modal" tabindex="-1" role="dialog" aria-labelledby="change-pw-moda" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="">Change Password</h5>

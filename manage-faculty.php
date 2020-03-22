@@ -56,9 +56,9 @@
                 Enrollment
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Student Enrollment</a>
-                <a class="dropdown-item" href="#">Subjects</a>
-                <a class="dropdown-item" href="#">Subject-Offerings</a>
+                <a class="dropdown-item" href="enrollment-student.php">Student Enrollment</a>
+                <a class="dropdown-item" href="enrollment-subjects.php">Subjects</a>
+                <a class="dropdown-item" href="enrollment-subject-offerings.php">Subject-Offerings</a>
               </div>
             </li>
         </div>
@@ -69,7 +69,7 @@
 
       <!-- CHANGE PASSWORD MODAL -->
       <div class="modal fade" id="change-pw-modal" tabindex="-1" role="dialog" aria-labelledby="change-pw-moda" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="">Change Password</h5>
@@ -188,6 +188,48 @@
                       </div>
                     </div>
                   </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="table-card">
+                <div class="card-body">
+                  <table class="table">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Start Year</th>
+                        <th scope="col">Start Term</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark Otto</td>
+                        <td>2019</td>
+                        <td>First Semester</td>
+                        <td></td>
+                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-faculty-modal">
+                              <i class='far fa-trash-alt'></i>
+                            </button></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Keenan Mendiola</td>
+                        <td>2019</td>
+                        <td>First Semester</td>
+                        <td></td>
+                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-faculty-modal">
+                              <i class='far fa-trash-alt'></i>
+                            </button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
       </div>
