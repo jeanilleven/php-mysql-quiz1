@@ -3,6 +3,11 @@
     include 'connect_to_db.php';
     session_start();
 
+    if(isset($_GET['end']) && $_GET['end'] == true){
+        session_destroy();
+        header('Location: index.php');
+    }
+
     // these $_SESSION variables are available for use in the admin.php, students.php and faculty.php
     if(isset($_POST['submit_login'])){
         $_SESSION['account_id'] = $_POST['account_id'];
@@ -12,7 +17,7 @@
     }
 
 
-    // all "home" links should link to account.php NOT there source php
+    // all "home" links should link to account.php NOT the admin.php, students.php and faculty.php
 
     if($_SESSION['account_id'] == 'admin' && $_SESSION['account_password'] == 'admin'){
         include 'admin.php';
@@ -20,8 +25,6 @@
         $account_query = "SELECT * FROM ".$_SESSION['account_type']." WHERE id=".$_SESSION['account_id']." AND password='".$_SESSION['account_password']."'";
         $res = $conn->query($account_query);
         $conn->close();
-
-        // echo $account_query;
 
         if($res && $res->num_rows > 0){
 
