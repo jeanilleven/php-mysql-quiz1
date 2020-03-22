@@ -1,12 +1,19 @@
 <?php 
     // Manage Faculty Functions
     function addFaculty($fname, $lname, $email, $gender, $term, $year, $conn){
-        $query = "INSERT INTO faculty(first_name, last_name, email, gender, start_term, start_year, created_at) VALUES('$fname','$lname', '$email','$gender', '$term','$year', now() )";
+        $fname = ucfirst($fname);
+        $lname = ucfirst($lname);
+        $query = "INSERT INTO faculty(first_name, last_name, email, gender,password, start_term, start_year, created_at) VALUES('$fname','$lname', '$email','$gender','$fname' ,'$term','$year', now() )";
         mysqli_query($conn, $query);
         //header('location: manage-faculty.php');
     }
 
+    function removeFaculty($id, $conn){
+        $query = "UPDATE faculty SET deleted_at=now() WHERE id=$id";
+        mysqli_query($conn, $query);
 
+        header('location: manage-faculty.php');
+    }
     // Manage Room Functions
     function insertRoom($room , $capacity, $conn){
         $query = "INSERT INTO rooms(name, capacity, created_at) VALUES('$room', '$capacity', now())";
