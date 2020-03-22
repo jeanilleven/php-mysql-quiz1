@@ -67,7 +67,7 @@
                               <span class="input-group-text" id="start_term"><i class='far fa-calendar-alt'></i></span>
                             </div>
                             <select required name="year" class="form-control">
-                              <option disabled>Start Year</option>
+                              <option >Start Year</option>
                               <option value="2019">2019</option>
                               <option value="2020">2020</option>
                             </select>
@@ -75,7 +75,7 @@
                               <span class="input-group-text" id="start_term"><i class='far fa-clock'></i></span>
                             </div>
                             <select required name="term" class="form-control">
-                              <option disabled>Start Term</option>
+                              <option >Start Term</option>
                               <option value="First Semester">First Semester</option>
                               <option value="Second Semester">Second Semester</option>
                             </select>
@@ -107,27 +107,26 @@
                       </tr>
                     </thead>
                     <tbody>
-                    hello
                     <?php
-                        $faculty = mysqli_query($conn, "select * from faculty order by last_name asc");
-                        echo "<Script>alert(".$faculty.");</script>";
+                        $faculty = mysqli_query($conn, "select * from faculty ");
                         foreach($faculty as $f){
-                          if($f['deleted_at']==null){
+                          if($f['deleted_at']==null || $f['deleted_at']=='0000-00-00'){
                             echo "
                               <tr id='F".$f['id']."'>
-                              <td style=' text-align: left;'>".$f['first_name']." ".$f['last_name']."</td>
-                              <td style=' text-align: left;'>".$r['start_year']."</td>
-                              <td style=' text-align: left;'>".$r['start_term']."</td>
-                              <td style='text-align: left;'></td>
-                              <td style=' text-align: right;'>
-                                <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-faculty-modal'>
-                                  <i class='far fa-trash-alt'></i>
-                                </button></td>
-                              </td>
+                                <td style=' text-align: left;'>".$f['id']."</td>
+                                <td style=' text-align: left;'>".$f['first_name']." ".$f['last_name']."</td>
+                                <td style=' text-align: left;'>".$f['start_year']."</td>
+                                <td style=' text-align: left;'>".$f['start_term']."</td>
+                                <td style='text-align: left;'></td>
+                                <td style=' text-align: right;'>
+                                  <button type='button' value='".$f['id']."' class='btn btn-danger' data-toggle='modal' data-target='#delete-faculty-modal'>
+                                    <i class='far fa-trash-alt'></i>
+                                  </button></td>
+                                </td>
                             </tr>
                           ";
                           } 
-                        }
+                        };
                       ?>
                     </tbody>
                   </table>
@@ -149,8 +148,8 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <form action="manage-students.php" method="get">
-                      <input type="hidden" name="id" value="">
+                    <form action="manage-faculty.php" method="get">
+                      <input type="hidden" class="id" name="id" value="">
                       <button type="submit" name="remove-faculty-btn" value="1"class="btn btn-danger">Remove</button>
                     </form>
                   </div>
@@ -161,3 +160,12 @@
         </div>
   </body>
 </html>
+
+<script>
+  function getID(i){
+    var value = $('#'+i+" td:nth-child(3) button").attr('value');
+    $('.id').val(value);
+    // $('.name').val($('#'+i+" td:nth-child(1)").html());
+    // $('.capacity').val($('#'+i+" td:nth-child(2)").html());
+  }
+</script>

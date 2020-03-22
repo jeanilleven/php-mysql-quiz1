@@ -20,7 +20,7 @@
     // all "home" links should link to account.php NOT the admin.php, students.php and faculty.php
 
     if($_SESSION['account_id'] == 'admin' && $_SESSION['account_password'] == 'admin'){
-        include './admin/home.php';
+        header('location: ./admin/home.php');
     }else{
         $account_query = "SELECT * FROM ".$_SESSION['account_type']." WHERE id=".$_SESSION['account_id']." AND password='".$_SESSION['account_password']."'";
         $res = $conn->query($account_query);
