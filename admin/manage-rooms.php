@@ -1,115 +1,26 @@
 <?php
-  require 'connect_to_db.php';
+  include '../connect_to_db.php';
+  include 'form-handler.php';
+
+  if(isset($_GET['add-room-btn'])){
+    insertRoom( $_GET['name'], $_GET['capacity'], $conn);
+  }
+
+  if(isset($_GET['remove-room-btn'])){
+    deleteRoom($_GET['id'], $conn);
+  }
+
+  if(isset($_GET['edit-room-btn'])){
+    editRoom($_GET['id'], $_GET['name'], $_GET['capacity'], $conn);
+  }
+
 ?>
 
 
-<!doctype html>
-<html>
-    <head>
-        <title>ISMIS</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-        <script src="manage-enrollment-nav-js.js"></script>
-        <link rel="stylesheet" href="index-styles.css" type="text/css">
-    </head>
-    <body>
-      <nav id="header" style="background-color: #f8f9fa;">
-        <img id="navbar-pic" height="50" src="pics/nav-logo.png" style="margin-left: 50px;">
-        <span  style="color:#07500b; " class="dropdown">
-          <a style="box-shadow:none;"id="user-dropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img id="user-icon" style="border-radius: 50%; border: 1px solid gray;" src="pics/man-icon.png" alt="icon">
-            <span style="color:#07500b; " id="user-id">18400175</span>
-          </a>
-          <span class="dropdown-menu" aria-labelledby="user-dropdown">
-            <a class="dropdown-item" data-toggle="modal" data-target="#change-pw-modal" type="button" style="cursor:pointer">Change Password</a>
-            <a class="dropdown-item" href="#">Logout</a>
-          </span>
-        </span>
-      </nav>
-
-      <nav style="background-color: #07500b;"id="menu" class="navbar navbar-expand-lg navbar-light">
-        <a style="color: white;margin-left: 80px;"class="navbar-brand" href="#"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a style="color:white;"class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item dropdown">
-              <a style="color:white;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Manage
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="manage-faculty.php">Faculty</a>
-                <a class="dropdown-item" href="manage-students.php">Students</a>
-                <a class="dropdown-item" href="#">Rooms</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a style="color:white;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Enrollment
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="enrollment-student.php">Student Enrollment</a>
-                <a class="dropdown-item" href="enrollment-subjects.php">Subjects</a>
-                <a class="dropdown-item" href="enrollment-subject-offerings.php">Subject-Offerings</a>
-              </div>
-            </li>
-        </div>
-      </nav>
-
-
-      <!-- END OF NAVIGATION -->
-
-      <!-- CHANGE PASSWORD MODAL -->
-      <div class="modal fade" id="change-pw-modal" tabindex="-1" role="dialog" aria-labelledby="change-pw-moda" aria-hidden="true">
-        <div class="modal-dialog " role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="">Change Password</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-          <div class="modal-body">
-            <form>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="old_pw"><i class='fas fa-lock'></i></span>
-                </div>
-                <input name="old-pw" type="password" class="form-control" placeholder="Old Password" aria-label="Old Password" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="old_pw"><i class='fas fa-lock'></i></span>
-                </div>
-                <input name="new-pw" type="password" class="form-control" placeholder="New Password" aria-label="pw1" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="old_pw"><i class='fas fa-lock'></i></span>
-                </div>
-                <input name="pw2" type="password" class="form-control" placeholder="Confirm Password" aria-label="pw2" aria-describedby="basic-addon1">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-success">Save changes</button>
-            </div>
-            </form>
-        </div>
-      </div>
-      </div>
-
-
-      <div class="container" style="margin-top: 20px;">
+      <?php 
+        include 'pageheader.php';
+      ?>
+      <div class="container" style="margin-top: 20px; padding-bottom: 20px;">
           <div class="row">
             <div class="col-lg-6">
                 <h1>ROOMS</h1>
@@ -135,18 +46,18 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="name"><i class='fas fa-door-open'></i></span>
                             </div>
-                            <input name="name" type="text" class="form-control" placeholder="Room Name" aria-label="name" aria-describedby="basic-addon1">
+                            <input name="name" required type="text" class="form-control" placeholder="Room Name" aria-label="name" aria-describedby="basic-addon1">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="capacity"><i class='fas fa-users'></i></span>
                             </div>
-                            <input name="capacity" min=0 type="number" class="form-control" placeholder="Capacity" aria-label="capacity" aria-describedby="basic-addon1">
+                            <input name="capacity" required min="0" type="number" class="form-control" placeholder="Capacity" aria-label="capacity" aria-describedby="basic-addon1">
                           </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-success">Add</button>
+                          <button type="submit" name="add-room-btn" value="1" class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
@@ -154,29 +65,112 @@
                   </div>
             </div>
           </div>
-      </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="table-card">
+                <div class="card-body">
+                  <table class="table " style="width: 80%; margin: auto;">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Capacity</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                        $rooms = mysqli_query($conn, "select * from rooms order by name asc");
+                        foreach($rooms as $r){
+                          if($r['deleted_at']==null){
+                            echo "
+                            <tr id='R".$r['id']."'>
+                              <td>".$r['name']."</td>
+                              <td>".$r['capacity']."</td>
+                              <td><button onclick='getID(this.id)' value='".$r['id']."' id='R".$r['id']."' style='margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
+                                  <i class='fas fa-pencil-alt'></i></button>
+                                  <button onclick='getID(this.id)' id='R".$r['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-room-modal'>
+                                  <i class='far fa-trash-alt'></i></button>
+                              </td>
+                            </tr>
+                          ";
+                          } 
+                        }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <!-- ADD ROOM -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <!-- DELETE ROOM MODAL -->
+          <div class="modal fade" id="delete-room-modal" tabindex="-1" role="dialog" aria-labelledby="delete-room-modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this room?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="manage-rooms.php" method="get">
+                      <input type="hidden" class="id" name="id" value="">
+                      <button type="submit" name="remove-room-btn" value="1"class="btn btn-danger">Remove</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>          
+          </div>
+
+          <!-- EDIT ROOM MODAL -->
+          <div class="modal fade" id="edit-room-modal" tabindex="-1" role="dialog" aria-labelledby="edit-room-modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="add-room-modal">Edit Room</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="" method="get">
+                  <input type="hidden" class="id" name="id" value="">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" ><i class='fas fa-door-open'></i></span>
+                    </div>
+                    <input name="name"  required type="text" class="form-control name" placeholder="Room Name" aria-label="name" aria-describedby="basic-addon1">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" ><i class='fas fa-users'></i></span>
+                    </div>
+                    <input name="capacity" required min="0" type="number" class="form-control capacity" placeholder="Capacity" aria-label="capacity" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" name="edit-room-btn" value="1" class="btn btn-success">Save Changes</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
       </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-      
   </body>
-     
 </html>
+<script>
+  function getID(i){
+    var value = $('#'+i+" td:nth-child(3) button").attr('value');
+    $('.id').val(value);
+    $('.name').val($('#'+i+" td:nth-child(1)").html());
+    $('.capacity').val($('#'+i+" td:nth-child(2)").html());
+  }
+  
+
+</script>
