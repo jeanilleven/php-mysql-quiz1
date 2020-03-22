@@ -1,7 +1,14 @@
 <?php
   include '../connect_to_db.php';
-  include 'pageheader.php';
+  include 'form-handler.php';
+
+
+  if(isset($_GET['add-faculty-btn'])){
+    addFaculty($_GET['fname'], $_GET['lname'], $_GET['email'], $_GET['gender'], $_GET['term'], $_GET['year'], $conn);
+  }
 ?>
+      <?php include 'pageheader.php';?>
+
       <div class="container" style="margin-top: 20px;">
           <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-6">
@@ -28,19 +35,19 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="fname"><i class='fas fa-user-alt'></i></span>
                             </div>
-                            <input name="fname" type="text" class="form-control" placeholder="First Name" aria-label="fname" aria-describedby="basic-addon1">
+                            <input required name="fname" type="text" class="form-control" placeholder="First Name" aria-label="fname" aria-describedby="basic-addon1">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="lname"><i class='fas fa-user-alt'></i></span>
                             </div>
-                            <input name="lname" type="text" class="form-control" placeholder="Last Name" aria-label="lname" aria-describedby="basic-addon1">
+                            <input required name="lname" type="text" class="form-control" placeholder="Last Name" aria-label="lname" aria-describedby="basic-addon1">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="email"><i class='far fa-envelope'></i></span>
                             </div>
-                            <input name="email" type="email" class="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1">
+                            <input required name="email" type="email" class="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1">
                           </div>
                           <div class="input-group mb-3" >
                             <div class="input-group-prepend" >
@@ -51,7 +58,7 @@
                               <label class="form-check-label" for="inlineCheckbox1">Male</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input name="gender" class="form-check-input" type="radio" value="Female">
+                              <input required name="gender" class="form-check-input" type="radio" value="Female">
                               <label class="form-check-label" for="inlineCheckbox2">Female</label>
                             </div>
                         </div>
@@ -59,16 +66,16 @@
                           <div class="input-group-prepend">
                               <span class="input-group-text" id="start_term"><i class='far fa-calendar-alt'></i></span>
                             </div>
-                            <select name="year" class="form-control">
-                              <option value="null">Start Year</option>
+                            <select required name="year" class="form-control">
+                              <option disabled>Start Year</option>
                               <option value="2019">2019</option>
                               <option value="2020">2020</option>
                             </select>
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="start_term"><i class='far fa-clock'></i></span>
                             </div>
-                            <select name="term" class="form-control">
-                              <option value="null">Start Term</option>
+                            <select required name="term" class="form-control">
+                              <option disabled>Start Term</option>
                               <option value="First Semester">First Semester</option>
                               <option value="Second Semester">Second Semester</option>
                             </select>
@@ -76,7 +83,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-success">Add</button>
+                          <button type="submit" name="add-faculty-btn" value="1" class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
@@ -100,26 +107,28 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark Otto</td>
-                        <td>2019</td>
-                        <td>First Semester</td>
-                        <td></td>
-                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-faculty-modal">
-                              <i class='far fa-trash-alt'></i>
-                            </button></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Keenan Mendiola</td>
-                        <td>2019</td>
-                        <td>First Semester</td>
-                        <td></td>
-                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-faculty-modal">
-                              <i class='far fa-trash-alt'></i>
-                            </button></td>
-                      </tr>
+                    hello
+                    <?php
+                        $faculty = mysqli_query($conn, "select * from faculty order by last_name asc");
+                        echo "<Script>alert(".$faculty.");</script>";
+                        foreach($faculty as $f){
+                          if($f['deleted_at']==null){
+                            echo "
+                              <tr id='F".$f['id']."'>
+                              <td style=' text-align: left;'>".$f['first_name']." ".$f['last_name']."</td>
+                              <td style=' text-align: left;'>".$r['start_year']."</td>
+                              <td style=' text-align: left;'>".$r['start_term']."</td>
+                              <td style='text-align: left;'></td>
+                              <td style=' text-align: right;'>
+                                <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-faculty-modal'>
+                                  <i class='far fa-trash-alt'></i>
+                                </button></td>
+                              </td>
+                            </tr>
+                          ";
+                          } 
+                        }
+                      ?>
                     </tbody>
                   </table>
                 </div>

@@ -1,4 +1,13 @@
 <?php 
+    // Manage Faculty Functions
+    function addFaculty($fname, $lname, $email, $gender, $term, $year, $conn){
+        $query = "INSERT INTO faculty(first_name, last_name, email, gender, start_term, start_year, created_at) VALUES('$fname','$lname', '$email','$gender', '$term','$year', now() )";
+        mysqli_query($conn, $query);
+        header('location: manage-faculty.php');
+    }
+
+
+    // Manage Room Functions
     function insertRoom($room , $capacity, $conn){
         $query = "INSERT INTO rooms(name, capacity, created_at) VALUES('$room', '$capacity', now())";
         mysqli_query($conn, $query);
@@ -20,6 +29,7 @@
         header('location: manage-rooms.php');
     }
 
+    // Enrollment - Subjects Functions
     function addSubject($name, $code, $conn){
         $query = "INSERT INTO subjects(name, code) VALUES('$name', '$code')";
         mysqli_query($conn, $query);
