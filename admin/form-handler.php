@@ -3,7 +3,7 @@
     function addFaculty($fname, $lname, $email, $gender, $term, $year, $conn){
         $query = "INSERT INTO faculty(first_name, last_name, email, gender, start_term, start_year, created_at) VALUES('$fname','$lname', '$email','$gender', '$term','$year', now() )";
         mysqli_query($conn, $query);
-        header('location: manage-faculty.php');
+        //header('location: manage-faculty.php');
     }
 
 
