@@ -15,7 +15,7 @@
         $_SESSION['account_password'] = $_POST['account_password'];
         $_SESSION['open_tab'] = 'home'; // save current tab into this variable
     }
-
+ 
 
     // all "home" links should link to account.php NOT the admin.php, students.php and faculty.php
 
