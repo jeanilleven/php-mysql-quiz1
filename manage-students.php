@@ -100,7 +100,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-success">Save changes</button>
             </div>
             </form>
         </div>
@@ -114,7 +114,7 @@
                 <h1>STUDENTS</h1>
             </div>
             <div class="col-lg-6 col-sm-6 col-xs-6">
-                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-student-modal">
+                <button style="float:right;"type="button" class="btn btn-success" data-toggle="modal" data-target="#add-student-modal">
                     Add Student
                 </button>
                   
@@ -181,7 +181,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary">Add</button>
+                          <button type="submit" class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>

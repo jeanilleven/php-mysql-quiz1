@@ -100,7 +100,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-success">Save changes</button>
             </div>
             </form>
         </div>
@@ -114,7 +114,7 @@
                 <h1>FACULTY</h1>
             </div>
             <div class="col-lg-6 col-sm-6 col-xs-6">
-                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-faculty-modal">
+                <button style="float:right;"type="button" class="btn btn-success" data-toggle="modal" data-target="#add-faculty-modal">
                     Add Faculty
                 </button>
                   
@@ -182,7 +182,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary">Add</button>
+                          <button type="submit" class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
@@ -232,7 +232,28 @@
               </div>
             </div>
           </div>
-      </div>
+
+          <div class="modal fade" id="delete-faculty-modal" tabindex="-1" role="dialog" aria-labelledby="delete-faculty-modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this Faculty staff?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <form action="manage-faculty.php" method="get">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger">Remove</button>
+                    </form>
+                  </div>
+                  </div>
+                </div>
+              </div>          
+            </div>
       
   </body>
      

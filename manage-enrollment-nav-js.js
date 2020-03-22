@@ -14,4 +14,6 @@ $(document).ready(()=>{
   $('.table-card').css("border", "0.5px solid #3c5f3d");
   $('.table-card').css("border-radius", "5px");
   $('.table-card').css("background-color", "#FFFF");
+
+  $('.btn-success').css("background-color", "#07500b");
 });
