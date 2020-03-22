@@ -3,6 +3,7 @@
     include 'connect_to_db.php';
     session_start();
 
+    // these $_SESSION variables are available for use in the admin.php, students.php and faculty.php
     if(isset($_POST['submit_login'])){
         $_SESSION['account_id'] = $_POST['account_id'];
         $_SESSION['account_type'] = $_POST['account_type'];
