@@ -15,10 +15,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    <link rel="stylesheet" href="index-styles.css" type="text/css">
+    <link rel="stylesheet" href="admin/index-styles.css" type="text/css">
+
+
 </head>
 <body>
 
+<div>
     <?php include 'all/nav_logo_profile.php'; ?>
 
     <nav style="background-color: #07500b;"id="menu" class="navbar navbar-expand-lg navbar-light">
@@ -44,6 +47,8 @@
             </li>
         </div>
     </nav>
+</div>
+
 
 
 </body>
