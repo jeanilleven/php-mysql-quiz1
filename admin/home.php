@@ -3,6 +3,19 @@
   
 ?>
   <?php include 'pageheader.php'; ?>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="card" style="margin-top: 20px;">
+          <div class="card-body">
+            <h1>LOREM IPSUM</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   </body>
      
 </html>

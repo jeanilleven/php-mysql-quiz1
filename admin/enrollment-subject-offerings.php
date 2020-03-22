@@ -1,10 +1,11 @@
 <?php
   include '../connect_to_db.php';
-  include 'pageheader.php';
+  
 ?>
 
 
-
+    <?php include 'pageheader.php'; ?>
+    
       <div class="container" style="margin-top: 20px;">
           <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-6">

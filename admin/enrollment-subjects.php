@@ -79,8 +79,8 @@
                           if($s['deleted_at']==null){
                             echo "
                             <tr id='S".$s['id']."'>
-                              <td style=' text-align: center;'>".$s['code']."</td>
-                              <td style=' text-align: center;'>".$s['name']."</td>
+                              <td style=' text-align: left;'>".$s['code']."</td>
+                              <td style=' text-align: left;'>".$s['name']."</td>
                               <td style=' text-align: right;'><button onclick='getID(this.id)' value='".$s['id']."' id='S".$s['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-subject-modal'>
                                   <i class='fas fa-pencil-alt'></i></button>
                                   <button onclick='getID(this.id)' id='S".$s['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-subject-modal'>
