@@ -12,6 +12,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <script src="manage-enrollment-nav-js.js"></script>
         <link rel="stylesheet" href="index-styles.css" type="text/css">
     </head>
     <body>
@@ -193,18 +194,3 @@
   </body>
      
 </html>
-
-<script>
-  $('#user-id').css("margin-bottom", "0.5rem");
-  $('#user-id').css("margin-top", "0.5rem");
-  $('#user-id').css("margin-left", "15px");
-
-  $('#user-dropdown').css("background-color", "#f8f9fa");
-  $('#user-dropdown').css("border", "none");
-
-  $('a').on("click", ()=>{
-    $('this').css("background-color", "#a1a7ad");
-  })
-
-  $('.form-check-inline .form-check-input').css("margin-left", "0.5rem");
-</script>
