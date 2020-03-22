@@ -1,3 +1,7 @@
+<?php
+  require 'connect_to_db.php';
+?>
+
 <!doctype html>
 <html>
     <head>
@@ -8,6 +12,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <script src="manage-enrollment-nav-js.js"></script>
         <link rel="stylesheet" href="index-styles.css" type="text/css">
     </head>
     <body>
@@ -41,9 +46,9 @@
                 Manage
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="manage-faculty.html">Faculty</a>
+                <a class="dropdown-item" href="manage-faculty.php">Faculty</a>
                 <a class="dropdown-item" href="#">Students</a>
-                <a class="dropdown-item" href="#">Rooms</a>
+                <a class="dropdown-item" href="manage-rooms.php">Rooms</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -105,10 +110,10 @@
 
       <div class="container" style="margin-top: 20px;">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-sm-6 col-xs-6">
                 <h1>STUDENTS</h1>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-sm-6 col-xs-6">
                 <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-student-modal">
                     Add Student
                 </button>
@@ -124,12 +129,61 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          ...
+                        <form action="manage-students.php" method="get">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="fname"><i class='fas fa-user-alt'></i></span>
+                            </div>
+                            <input name="fname" type="text" class="form-control" placeholder="First Name" aria-label="fname" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="lname"><i class='fas fa-user-alt'></i></span>
+                            </div>
+                            <input name="lname" type="text" class="form-control" placeholder="Last Name" aria-label="lname" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3" >
+                            <div class="input-group-prepend" >
+                              <span class="input-group-text" id="gender"><i class='	fa fa-venus-mars'></i></span>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-right: 4px;">
+                              <input name="gender"class="form-check-input" type="radio"  value="Male">
+                              <label class="form-check-label" for="inlineCheckbox1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input name="gender" class="form-check-input" type="radio" value="Female">
+                              <label class="form-check-label" for="inlineCheckbox2">Female</label>
+                            </div>
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="start_term"><i class='fas fa-graduation-cap'></i></span>
+                            </div>
+                            <select name="course" class="form-control">
+                              <option value="null">Programme</option>
+                              <option value="Computer Science">Computer Science</option>
+                              <option value="Information Science">Information Science</option>
+                              <option value="Information Technology">Information Technology</option>
+                              <option value="Mathematics">Mathematics</option>
+                            </select>
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="start_term"><i class='far fa-calendar-times'></i></span>
+                            </div>
+                            <select name="year" class="form-control">
+                              <option value="null">Year Level</option>
+                              <option value="1">First Year</option>
+                              <option value="2">Second Year</option>
+                              <option value="3">Third Year</option>
+                              <option value="4">Fourth Year</option>
+                              <option value="5">Fifth Year</option>
+                            </select>
+                          </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Add</button>
+                          <button type="submit" class="btn btn-primary">Add</button>
                         </div>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -140,16 +194,3 @@
   </body>
      
 </html>
-
-<script>
-  $('#user-id').css("margin-bottom", "0.5rem");
-  $('#user-id').css("margin-top", "0.5rem");
-  $('#user-id').css("margin-left", "15px");
-
-  $('#user-dropdown').css("background-color", "#f8f9fa");
-  $('#user-dropdown').css("border", "none");
-
-  $('a').on("click", ()=>{
-    $('this').css("background-color", "#a1a7ad");
-  })
-</script>

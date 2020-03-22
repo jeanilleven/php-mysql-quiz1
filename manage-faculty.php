@@ -1,9 +1,6 @@
-<?php 
-
-    include 'connect_to_db.php';
-
+<?php
+  require 'connect_to_db.php';
 ?>
-
 
 <!doctype html>
 <html>
@@ -15,6 +12,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <script src="manage-enrollment-nav-js.js"></script>
         <link rel="stylesheet" href="index-styles.css" type="text/css">
     </head>
     <body>
@@ -23,11 +21,11 @@
         <span  style="color:#07500b; " class="dropdown">
           <a style="box-shadow:none;"id="user-dropdown" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img id="user-icon" style="border-radius: 50%; border: 1px solid gray;" src="pics/man-icon.png" alt="icon">
-            <span style="color:#07500b; " id="user-id"><?php printf("%08d", $_SESSION['account_id']);?></span>
+            <span style="color:#07500b; " id="user-id">18400175</span>
           </a>
           <span class="dropdown-menu" aria-labelledby="user-dropdown">
             <a class="dropdown-item" data-toggle="modal" data-target="#change-pw-modal" type="button" style="cursor:pointer">Change Password</a>
-            <a class="dropdown-item" href="account.php/?end=true">Logout</a>
+            <a class="dropdown-item" href="#">Logout</a>
           </span>
         </span>
       </nav>
@@ -48,9 +46,9 @@
                 Manage
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="manage-faculty.html">Faculty</a>
-                <a class="dropdown-item" href="#">Students</a>
-                <a class="dropdown-item" href="#">Rooms</a>
+                <a class="dropdown-item" href="#">Faculty</a>
+                <a class="dropdown-item" href="manage-students.php">Students</a>
+                <a class="dropdown-item" href="manage-rooms.php">Rooms</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -110,19 +108,90 @@
       </div>
 
 
+      <div class="container" style="margin-top: 20px;">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-6">
+                <h1>FACULTY</h1>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-xs-6">
+                <button style="float:right;"type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-faculty-modal">
+                    Add Faculty
+                </button>
+                  
+                  <!-- Add Faculty Modal -->
+                  <div class="modal fade" id="add-faculty-modal" tabindex="-1" role="dialog" aria-labelledby="add-faculty-modal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="add-faculty-modal">Add Faculty</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                        <form action="manage-faculty.php" method="get">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="fname"><i class='fas fa-user-alt'></i></span>
+                            </div>
+                            <input name="fname" type="text" class="form-control" placeholder="First Name" aria-label="fname" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="lname"><i class='fas fa-user-alt'></i></span>
+                            </div>
+                            <input name="lname" type="text" class="form-control" placeholder="Last Name" aria-label="lname" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="email"><i class='far fa-envelope'></i></span>
+                            </div>
+                            <input name="email" type="email" class="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1">
+                          </div>
+                          <div class="input-group mb-3" >
+                            <div class="input-group-prepend" >
+                              <span class="input-group-text" id="gender"><i class='	fa fa-venus-mars'></i></span>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-right: 4px;">
+                              <input name="gender"class="form-check-input" type="radio"  value="Male">
+                              <label class="form-check-label" for="inlineCheckbox1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input name="gender" class="form-check-input" type="radio" value="Female">
+                              <label class="form-check-label" for="inlineCheckbox2">Female</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text" id="start_term"><i class='far fa-calendar-alt'></i></span>
+                            </div>
+                            <select name="year" class="form-control">
+                              <option value="null">Start Year</option>
+                              <option value="2019">2019</option>
+                              <option value="2020">2020</option>
+                            </select>
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="start_term"><i class='far fa-clock'></i></span>
+                            </div>
+                            <select name="term" class="form-control">
+                              <option value="null">Start Term</option>
+                              <option value="First Semester">First Semester</option>
+                              <option value="Second Semester">Second Semester</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+      </div>
+      
   </body>
      
 </html>
-
-<script>
-  $('#user-id').css("margin-bottom", "0.5rem");
-  $('#user-id').css("margin-top", "0.5rem");
-  $('#user-id').css("margin-left", "15px");
-
-  $('#user-dropdown').css("background-color", "#f8f9fa");
-  $('#user-dropdown').css("border", "none");
-
-  $('a').on("click", ()=>{
-    $('this').css("background-color", "#a1a7ad");
-  })
-</script>

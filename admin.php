@@ -1,3 +1,7 @@
+<?php
+  require 'connect_to_db.php';
+?>
+
 <!doctype html>
 <html>
     <head>
@@ -41,9 +45,9 @@
                 Manage
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="manage-faculty.html">Faculty</a>
-                <a class="dropdown-item" href="#">Students</a>
-                <a class="dropdown-item" href="#">Rooms</a>
+                <a class="dropdown-item" href="manage-faculty.php">Faculty</a>
+                <a class="dropdown-item" href="manage-students.php">Students</a>
+                <a class="dropdown-item" href="manage-rooms.php">Rooms</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -114,8 +118,4 @@
 
   $('#user-dropdown').css("background-color", "#f8f9fa");
   $('#user-dropdown').css("border", "none");
-
-  $('a').on("click", ()=>{
-    $('this').css("background-color", "#a1a7ad");
-  })
 </script>
