@@ -6,7 +6,8 @@
 
         if($_POST['account_id'] == 'admin' && $_POST['account_password'] == 'admin'){
             echo 'hello';   
-            include 'index.html';
+            include 'index.php';
+            header('location: admin.php');
         }else{
             $account_query = "SELECT * FROM ".$_POST['account_type']." WHERE id=".$_POST['account_id']." AND password='".$_POST['account_password']."'";
             $res = $conn->query($account_query);

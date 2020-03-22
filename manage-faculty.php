@@ -47,7 +47,7 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">Faculty</a>
                 <a class="dropdown-item" href="manage-students.php">Students</a>
-                <a class="dropdown-item" href="manage-students.php">Rooms</a>
+                <a class="dropdown-item" href="manage-rooms.php">Rooms</a>
               </div>
             </li>
             <li class="nav-item dropdown">
