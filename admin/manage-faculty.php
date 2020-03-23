@@ -6,6 +6,11 @@
   if(isset($_GET['add-faculty-btn'])){
     addFaculty($_GET['fname'], $_GET['lname'], $_GET['email'], $_GET['gender'], $_GET['term'], $_GET['year'], $conn);
   }
+
+  if(isset($_GET['remove-faculty-btn'])){
+    removeFaculty($_GET['id'], $conn);
+  }
+
 ?>
       <?php include 'pageheader.php';?>
 
@@ -66,18 +71,20 @@
                           <div class="input-group-prepend">
                               <span class="input-group-text" id="start_term"><i class='far fa-calendar-alt'></i></span>
                             </div>
-                            <select required name="year" class="form-control">
-                              <option >Start Year</option>
-                              <option value="2019">2019</option>
-                              <option value="2020">2020</option>
+                            <select required="" name="year" class="form-control">
+                              <optgroup label="Start Year">
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                              </optgroup>
                             </select>
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="start_term"><i class='far fa-clock'></i></span>
                             </div>
                             <select required name="term" class="form-control">
-                              <option >Start Term</option>
-                              <option value="First Semester">First Semester</option>
-                              <option value="Second Semester">Second Semester</option>
+                              <optgroup label="Start Term">
+                                <option value="First Semester">First Semester</option>
+                                <option value="Second Semester">Second Semester</option>
+                              </optgroup>
                             </select>
                           </div>
                         </div>
@@ -108,18 +115,18 @@
                     </thead>
                     <tbody>
                     <?php
-                        $faculty = mysqli_query($conn, "select * from faculty ");
+                        $faculty = mysqli_query($conn, "select * from faculty order by last_name asc");
                         foreach($faculty as $f){
                           if($f['deleted_at']==null || $f['deleted_at']=='0000-00-00'){
                             echo "
                               <tr id='F".$f['id']."'>
-                                <td style=' text-align: left;'>".$f['id']."</td>
+                                <th scope='col' style=' text-align: left;'>".$f['id']."</th>
                                 <td style=' text-align: left;'>".$f['first_name']." ".$f['last_name']."</td>
                                 <td style=' text-align: left;'>".$f['start_year']."</td>
                                 <td style=' text-align: left;'>".$f['start_term']."</td>
                                 <td style='text-align: left;'></td>
                                 <td style=' text-align: right;'>
-                                  <button type='button' value='".$f['id']."' class='btn btn-danger' data-toggle='modal' data-target='#delete-faculty-modal'>
+                                  <button onclick='getID(this.id)' id='F".$f['id']."' type='button' value='".$f['id']."' class='btn btn-danger' data-toggle='modal' data-target='#delete-faculty-modal'>
                                     <i class='far fa-trash-alt'></i>
                                   </button></td>
                                 </td>
@@ -163,7 +170,7 @@
 
 <script>
   function getID(i){
-    var value = $('#'+i+" td:nth-child(3) button").attr('value');
+    var value = $('#'+i+" td:nth-child(6) button").attr('value');
     $('.id').val(value);
     // $('.name').val($('#'+i+" td:nth-child(1)").html());
     // $('.capacity').val($('#'+i+" td:nth-child(2)").html());
