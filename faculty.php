@@ -2,6 +2,8 @@
 
     include 'connect_to_db.php';
 
+    include './all/translators.php';
+
 ?>
 
 
@@ -21,7 +23,6 @@
 </head>
 <body>
 
-<div>
     <?php include 'all/nav_logo_profile.php'; ?>
 
     <nav style="background-color: #07500b;"id="menu" class="navbar navbar-expand-lg navbar-light">
@@ -47,10 +48,55 @@
             </li>
         </div>
     </nav>
-</div>
 
+    <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <h1>SUBJECTS</h1>
+            </div>
 
+            <div class="row mx-auto">
+                <div class="col-lg-12">
+                    <div class="table-card">
+                        <div class="card-body">
+                            <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Room</th>
+                                <th scope="col">Schedule</th>
+                                <th scope="col">Start Term</th>
+                                <th></th>
+                                <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                $query = "SELECT subjects.code, subjects.name AS subject_name, rooms.name AS room_name, schedules.day, schedules.time_start, schedules.time_end FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id INNER JOIN rooms ON offered_subjects.room_id=rooms.id INNER JOIN schedules ON offered_subjects.id=schedules.offered_subject_id WHERE offered_subjects.faculty_id =".$_SESSION['account_id'];                               
+                                $res = mysqli_query($conn, $query);
+                                foreach($res as $r):?>
+                                    <!-- /**
+                                        *TODO: consider deleted_at 
+                                     */ -->
+                                    <!-- <?php if($r['deleted_at']==null || $r['deleted_at']=='0000-00-00'):?> -->
+                                        <tr>
+                                            <td style=' text-align: left;'>[<?php echo $r['subject_code']?>] <?php echo $r['subject_name'] ?></td>
+                                            <td style=' text-align: left;'><?php echo $r['room_name']?></td>
+                                            <td style=' text-align: left;'><?php echo int_to_day($r['day'])?></td>
+                                            <td style=' text-align: left;'></td>
+                                        </tr>
+                                    <!-- <?php endif?> -->
+                                <?php endforeach?>?>
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
      
 </html>
+
