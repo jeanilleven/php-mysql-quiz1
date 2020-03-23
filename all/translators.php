@@ -10,7 +10,24 @@ function int_to_day($int){
     }else{
         return 'ERR';
     }
+}
 
+function int_to_start_time($int){
+    if($int < 30){
+        $h = 0;
+        $m = '00';
+        $h = 6 + ceil($int/2);
+        if($int%2 == 0){
+            $m = '30';
+        }
+        return $h.":".$m;
+    }else{
+        return 'ERR';
+    }
+}
+
+function int_to_end_time($int){
+    return int_to_start_time($int+1);
 }
 
 
