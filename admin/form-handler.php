@@ -19,9 +19,6 @@
         header("location: manage-students.php");
     }
 
-
-
-
     // Manage Faculty Functions
     function addFaculty($fname, $lname, $email, $gender, $term, $year, $conn){
         $fname = ucfirst($fname);
@@ -86,8 +83,8 @@
 
     // Enrollment - Subject Offerings Functions
 
-    function addSubjOffering($subject, $room, $conn){
-        $query = "INSERT INTO offered_subjects(room_id, subject_id, created_at) VALUES('$room', '$subject', now())";
+    function addSubjOffering($faculty, $subject, $room, $conn){
+        $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at) VALUES('$faculty','$room', '$subject', now())";
         mysqli_query($conn, $query);
 
         header("location: enrollment-subject-offerings.php");
