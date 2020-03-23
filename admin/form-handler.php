@@ -100,13 +100,15 @@
                     break;
                 }
             }
-
+        }
             if($conflict){
                 echo "<script>alert('Cannot add subject offering. Schedule is in conflict with the teacher.');</script>";
             }else{
                 //UPDATING OFFERED_SUBJECTS
                 $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at)
                           VALUES('$faculty','$room', '$subject', now())";
+                
+                //debug_print_backtrace();
                 mysqli_query($conn, $query);
 
                 $id = mysqli_query($conn, "SELECT * FROM offered_subjects ORDER BY id desc LIMIT 1");
@@ -125,7 +127,7 @@
                                 VALUES('$id','$d', '$s', '$e', now() )");
                 }
             }
-        }
+        
     }
 
     function removeSubjOffering($id, $conn){
