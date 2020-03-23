@@ -54,9 +54,9 @@
                     Enrollment
                   </a>
                   <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-                    <a class='dropdown-item' href='./enrollment-student.php'>Student Enrollment</a>
-                    <a class='dropdown-item' href='./enrollment-subjects.php'>Subjects</a>
-                    <a class='dropdown-item' href='./enrollment-subject-offerings.php'>Subject-Offerings</a>
+                    <a class='dropdown-item' href='./enrollment-student.php'>Enrollment - Students</a>
+                    <a class='dropdown-item' href='./enrollment-subjects.php'>Enrollment - Subjects</a>
+                    <a class='dropdown-item' href='./enrollment-subject-offerings.php'>Enrollment - Subject Offerings</a>
                   </div>
                 </li>
             </div>
