@@ -19,11 +19,11 @@
             <span  style='color:#07500b; ' class='dropdown'>
               <a style='box-shadow:none;'id='user-dropdown' class='btn btn-secondary dropdown-toggle' href='#' role='button' id='user-dropdown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                 <img id='user-icon' style='border-radius: 50%; border: 1px solid gray;' src='../pics/man-icon.png' alt='icon'>
-                <span style='color:#07500b; ' id='user-id'>18400175</span>
+                <span style='color:#07500b; ' id='user-id'>Admin</span>
               </a>
               <span class='dropdown-menu' aria-labelledby='user-dropdown'>
                 <a class='dropdown-item' data-toggle='modal' data-target='#change-pw-modal' type='button' style='cursor:pointer'>Change Password</a>
-                <a class='dropdown-item' href='#'>Logout</a>
+                <a class='dropdown-item' href='../index.php'>Logout</a>
               </span>
             </span>
           </nav>

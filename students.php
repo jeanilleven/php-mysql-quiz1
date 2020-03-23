@@ -1,6 +1,6 @@
 <?php 
 
-    include 'connect_to_db.php';
+    include 'all/connect_to_db.php';
 
 ?>
 
