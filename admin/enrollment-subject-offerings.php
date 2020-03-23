@@ -5,9 +5,9 @@
   if(isset($_GET['add-SO-btn'])){
     //addSubjOffering($_GET['faculty'],$_GET['subject'], $_GET['room'], $conn);
     if(isset($_GET['day'])){
-      echo "<script>alert(".$_GET['day'][0].")</script>";
+      echo "<script>alert('naay sod')</script>";
     }else{
-      echo "Choose sched";
+      echo "<script>alert('Add atleast one schedule.')</script>";
     }
   }
 
@@ -86,7 +86,7 @@
       </div>
 
       <!-- Add Subject Offering Modal -->
-                <div class="modal fade" id="add-subject-offering-modal" tabindex="-1" role="dialog" aria-labelledby="#add-subject-offering-modal" aria-hidden="true">
+                  <div class="modal fade" id="add-subject-offering-modal" tabindex="-1" role="dialog" aria-labelledby="#add-subject-offering-modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -95,45 +95,46 @@
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body">
                         <form action="enrollment-subject-offerings.php" method="get">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class='far fa-keyboard'></i></span>
-                            </div>
-                            <select required  name="subject" class="form-control">
-                              <option value="">Course</option>
-                              <?php
-                                $subjects = mysqli_query($conn, "select * from subjects order by code asc");
-                                foreach($subjects as $s){
-                                  if($s['deleted_at']==null||$s['deleted_at']=="0000-00-00"){
-                                    echo "
-                                      <option value='".$s['id']."'>".$s['code']." ".$s['name']."</option>
-                                    ";
+                          <div class="modal-body">
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"><i class='far fa-keyboard'></i></span>
+                              </div>
+                              <select required  name="subject" class="form-control">
+                                <option value="">Course</option>
+                                <?php
+                                  $subjects = mysqli_query($conn, "select * from subjects order by code asc");
+                                  foreach($subjects as $s){
+                                    if($s['deleted_at']==null||$s['deleted_at']=="0000-00-00"){
+                                      echo "
+                                        <option value='".$s['id']."'>".$s['code']." ".$s['name']."</option>
+                                      ";
+                                    }
                                   }
-                                }
-                              ?>  
-                            </select>
-                          </div>
-
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" ><i class='fas fa-door-open'></i></span>
-                            </div>
-                            <select required  name="room" class="form-control">
-                              <option value="">Room</option>
-                              <?php
-                                $rooms = mysqli_query($conn, "select * from rooms order by name asc");
-                                foreach($rooms as $r){
-                                  if($r['deleted_at']==null||$r['deleted_at']=="0000-00-00"){
-                                    echo "
-                                      <option value='".$r['id']."'>".$r['name']."</option>
-                                    ";
-                                  }
-                                }
-                              ?>  
+                                ?>  
                               </select>
                             </div>
+
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" ><i class='fas fa-door-open'></i></span>
+                              </div>
+                              <select required  name="room" class="form-control">
+                                <option value="">Room</option>
+                                <?php
+                                  $rooms = mysqli_query($conn, "select * from rooms order by name asc");
+                                  foreach($rooms as $r){
+                                    if($r['deleted_at']==null||$r['deleted_at']=="0000-00-00"){
+                                      echo "
+                                        <option value='".$r['id']."'>".$r['name']."</option>
+                                      ";
+                                    }
+                                  }
+                                ?>  
+                              </select>
+                            </div>
+
                             <div class="input-group mb-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text" ><i class='	fas fa-chalkboard-teacher'></i></span>
@@ -161,38 +162,38 @@
                                 
                                 foreach($days as $d){
                                   echo "
-                                        <div class='input-group mb-3' class='schedbox'>
+                                        <div class='input-group mb-3' class='schedbox' >
                                           <div class='input-group-prepend'>
                                             <div class='input-group-text'>
-                                              <input  type='checkbox' name='day[$ctr]' aria-label='Checkbox for following text input'>
+                                              <input class='schedbox' type='checkbox' value='1' name='day[$ctr]' aria-label='Checkbox for following text input'>
+                                              <div class='day'>
+                                                $d
+                                              </div>
+                                              <select disabled class='form-control time_dropdown'>
+                                                <option value=''>Start Time</option>
+                                              </select>
+                                              <select disabled class='form-control time_dropdown' >
+                                                <option value='' >End Time</option>
+                                              </select>
                                             </div>
                                           </div>
-                                          <div class='input-group-prepend'>
-                                            <div class='input-group-text day'>
-                                              $d
-                                            </div>
-                                          </div>
-                                          <select  class='form-control time_dropdown'>
-                                            <option value=''>Start Time</option>
-                                          </select>
-                                          <select class='form-control time_dropdown' >
-                                            <option value='' >End Time</option>
-                                          </select>
                                         </div>
                                   ";
                                   $ctr++;
                                 }
                               ?>
-
                             </div>
+
+                          </div>
                           <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" name="add-SO-btn" value="1" class="btn btn-success">Add</button>
-                        </div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" name="add-SO-btn" value="1" class="btn btn-success add-SO-btn">Add</button>
+                          </div>
                         </form>
                       </div>
                     </div>
                   </div>
+
   <!-- DELETE SUBJECT OFFERING MODAL -->
       <div class="modal fade" id="delete-SO-modal" tabindex="-1" role="dialog" aria-labelledby="delete-SO-modal" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -220,7 +221,9 @@
 </html>
 <script>
 
-  $('.day').css("width", "80px");
+  $('.day').css("width", "150px");
+  $('.day').css("padding", "10px");
+
   // FOR EDIT AND DELETE MODAL
   function getID(i){
     var value = $('#'+i+" td:nth-child(6) button").attr('value');
@@ -242,4 +245,23 @@
     $('.time_dropdown').append("<option value='"+value+"'>"+i+"</option>");
     value++;
   })
+
+  //FOR CHECKBOX
+  $('.schedbox').click(function(){
+    if($(this).is(":checked")){
+      //alert("checked");
+      $(this).siblings().removeAttr("disabled");
+    }else{
+      $(this).siblings().attr("disabled","disabled");
+    }
+  })
+
+  // SCHED VALIDATION
+  $('.add-SO-btn').click(()=>{
+    if($('input[type=checkbox]:checked').length==0){
+
+    }
+  })
+
+  
 </script>

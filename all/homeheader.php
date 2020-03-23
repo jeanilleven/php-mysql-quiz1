@@ -23,7 +23,7 @@
               </a>
               <span class='dropdown-menu' aria-labelledby='user-dropdown'>
                 <a class='dropdown-item' data-toggle='modal' data-target='#change-pw-modal' type='button' style='cursor:pointer'>Change Password</a>
-                <a class='dropdown-item' href='../index.php?end=1'>Logout</a>
+                <a class='dropdown-item' href='./index.php?end=1'>Logout</a>
               </span>
             </span>
           </nav>

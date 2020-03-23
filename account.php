@@ -21,7 +21,7 @@
     // all "home" links should link to account.php NOT the admin.php, students.php and faculty.php
 
     if($_SESSION['account_id'] == 'admin' && $_SESSION['account_password'] == 'admin'){
-        include './admin/home.php';
+        include 'home.php';
         //header('location: ./admin/home.php');
     }else{
         $_SESSION['account_password'] = md5($_SESSION['account_password']);
