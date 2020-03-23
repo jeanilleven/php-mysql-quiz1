@@ -1,10 +1,14 @@
 <?php
   include '../all/connect_to_db.php';
   include 'form-handler.php';
-  include '../all/translators.php';
 
   if(isset($_GET['add-SO-btn'])){
-    addSubjOffering($_GET['faculty'],$_GET['subject'], $_GET['room'], $conn);
+    //addSubjOffering($_GET['faculty'],$_GET['subject'], $_GET['room'], $conn);
+    if(isset($_GET['day'])){
+      echo "<script>alert(".$_GET['day'][0].")</script>";
+    }else{
+      echo "Choose sched";
+    }
   }
 
   if(isset($_GET['remove-SO-btn'])){
@@ -13,7 +17,7 @@
 ?>
 
 
-    <?php include 'pageheader.php'; ?>
+    <?php include '../all/pageheader.php'; ?>
     
       <div class="container" style="margin-top: 20px;">
           <div class="row">
@@ -24,8 +28,65 @@
                 <button style="float:right;" type="button" class="btn btn-success" data-toggle="modal" data-target="#add-subject-offering-modal">
                     Add Subject Offering
                 </button>
-                  <!-- Add Subject Offering Modal -->
-                  <div class="modal fade" id="add-subject-offering-modal" tabindex="-1" role="dialog" aria-labelledby="#add-subject-offering-modal" aria-hidden="true">
+            </div>
+          </div> 
+
+          <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+              <div class="table-card">
+                <div class="card-body" >
+                  <table class="table " style="width: 100%; margin: auto;">
+                    <thead class="thead-light">
+                      <tr>
+                        <th style=' text-align: left;' scope="col">Course</th>
+                        <th style=' text-align: center;'scope="col">Room</th>
+                        <th style=' text-align: center;'scope="col">Schedule</th>
+                        <th style=' text-align: left;'scope="col">Instructor</th>
+                        <th style=' text-align: center;'scope="col">Enrolled</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                        $offerings = mysqli_query($conn, "select * from offered_subjects order by subject_id asc");
+                        foreach($offerings as $o){
+                          if($o['deleted_at']==null){
+                            $c = mysqli_query($conn, "select*from subjects where id = ".$o['subject_id']);
+                            $c = mysqli_fetch_assoc($c);
+                            $r = mysqli_query($conn, "select * from rooms where id =".$o['room_id']);
+                            $r = mysqli_fetch_assoc($r);
+                            $s = mysqli_query($conn, "select*from enrolled_students where offering_id=".$o['id']);
+                            $s = mysqli_num_rows($s);
+                            $i = mysqli_query($conn, "select*from faculty where id=".$o['faculty_id']);
+                            $i = mysqli_fetch_assoc($i);
+                            echo "
+                            <tr id='O".$o['id']."'>
+                              <td style=' text-align: left;'>".$c['code']." ".$c['name']."</td>
+                              <td style=' text-align: center;'>".$r['name']."</td>
+                              <td></td>
+                              <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."</td>
+                              <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
+                              <td style=' text-align: right;'><button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
+                                  <i class='fas fa-pencil-alt'></i></button>
+                                  <button onclick='getID(this.id)' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
+                                  <i class='far fa-trash-alt'></i></button>
+                              </td>
+                            </tr>
+                          ";
+                          } 
+                        }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-- Add Subject Offering Modal -->
+                <div class="modal fade" id="add-subject-offering-modal" tabindex="-1" role="dialog" aria-labelledby="#add-subject-offering-modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -93,79 +154,37 @@
                             </div>
 
                             <div class="input-group mb-3">
-                              <h6>Schedule</h6>
-                              <div class="input-group mb-3 sched">
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      <input type="checkbox" value="1" name="day[]" id="mon" aria-label="1" >
-                                    </div>
-                                  </div>
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      Mon
-                                    </div>
-                                  </div>
-                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
-                              </div>
+                              <i class="far fa-clock" style="margin-right: 3px;"></i><h5>SCHEDULE</h5>
+                              <?php 
+                                $days = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
+                                $ctr=0;
+                                
+                                foreach($days as $d){
+                                  echo "
+                                        <div class='input-group mb-3' class='schedbox'>
+                                          <div class='input-group-prepend'>
+                                            <div class='input-group-text'>
+                                              <input  type='checkbox' name='day[$ctr]' aria-label='Checkbox for following text input'>
+                                            </div>
+                                          </div>
+                                          <div class='input-group-prepend'>
+                                            <div class='input-group-text day'>
+                                              $d
+                                            </div>
+                                          </div>
+                                          <select  class='form-control time_dropdown'>
+                                            <option value=''>Start Time</option>
+                                          </select>
+                                          <select class='form-control time_dropdown' >
+                                            <option value='' >End Time</option>
+                                          </select>
+                                        </div>
+                                  ";
+                                  $ctr++;
+                                }
+                              ?>
 
-                              <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      <input type="checkbox" value="2" name="day[]" id="tue" aria-label="1" >
-                                    </div>
-                                  </div>
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      Tues
-                                    </div>
-                                  </div>
-                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
-                              </div>
-
-                              <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      <input type="checkbox" value="3" name="day[2]" id="wed" aria-label="1" >
-                                    </div>
-                                  </div>
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      Wed
-                                    </div>
-                                  </div>
-                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
-                              </div>
-
-                              <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      <input type="checkbox" value="4" name="day[3]" id="thur" aria-label="1" >
-                                    </div>
-                                  </div>
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      Thur
-                                    </div>
-                                  </div>
-                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
-                              </div>
-
-                              <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      <input type="checkbox" value="5" name="day[4]" id="fri" aria-label="1" >
-                                    </div>
-                                  </div>
-                                  <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                      Frida
-                                    </div>
-                                  </div>
-                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
-                              </div>
                             </div>
-
-                          </div>
                           <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                           <button type="submit" name="add-SO-btn" value="1" class="btn btn-success">Add</button>
@@ -174,63 +193,6 @@
                       </div>
                     </div>
                   </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-              <div class="table-card">
-                <div class="card-body">
-                  <table class="table " style="width: 100%; margin: auto;">
-                    <thead class="thead-light">
-                      <tr>
-                        <th style=' text-align: left;' scope="col">Course</th>
-                        <th style=' text-align: center;'scope="col">Room</th>
-                        <th style=' text-align: center;'scope="col">Schedule</th>
-                        <th style=' text-align: left;'scope="col">Instructor</th>
-                        <th style=' text-align: center;'scope="col">Enrolled</th>
-                        <th></th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                        $offerings = mysqli_query($conn, "select * from offered_subjects order by subject_id asc");
-                        foreach($offerings as $o){
-                          if($o['deleted_at']==null){
-                            $c = mysqli_query($conn, "select*from subjects where id = ".$o['subject_id']);
-                            $c = mysqli_fetch_assoc($c);
-                            $r = mysqli_query($conn, "select * from rooms where id =".$o['room_id']);
-                            $r = mysqli_fetch_assoc($r);
-                            $s = mysqli_query($conn, "select*from enrolled_students where offering_id=".$o['id']);
-                            $s = mysqli_num_rows($s);
-                            $i = mysqli_query($conn, "select*from faculty where id=".$o['faculty_id']);
-                            $i = mysqli_fetch_assoc($i);
-                            echo "
-                            <tr id='O".$o['id']."'>
-                              <td style=' text-align: left;'>".$c['code']." ".$c['name']."</td>
-                              <td style=' text-align: center;'>".$r['name']."</td>
-                              <td></td>
-                              <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."</td>
-                              <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
-                              <td style=' text-align: right;'><button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
-                                  <i class='fas fa-pencil-alt'></i></button>
-                                  <button onclick='getID(this.id)' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
-                                  <i class='far fa-trash-alt'></i></button>
-                              </td>
-                            </tr>
-                          ";
-                          } 
-                        }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-
   <!-- DELETE SUBJECT OFFERING MODAL -->
       <div class="modal fade" id="delete-SO-modal" tabindex="-1" role="dialog" aria-labelledby="delete-SO-modal" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -258,6 +220,8 @@
 </html>
 <script>
 
+  $('.day').css("width", "80px");
+  // FOR EDIT AND DELETE MODAL
   function getID(i){
     var value = $('#'+i+" td:nth-child(6) button").attr('value');
     $('.id').val(value);
@@ -265,4 +229,17 @@
     // $('.capacity').val($('#'+i+" td:nth-child(2)").html());
   }
 
+  // FOR TIME SCHEDULE DROPDOWN
+
+  var time = ['7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+             '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM',
+             '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM'];
+
+  $('.time_dropdown').css("position", "relative");
+
+  var value=2;
+  time.forEach((i)=>{
+    $('.time_dropdown').append("<option value='"+value+"'>"+i+"</option>");
+    value++;
+  })
 </script>

@@ -14,7 +14,7 @@
     editSubject($_GET['id'],$_GET['name'], $_GET['code'], $conn);
   }
 ?>
-      <?php include 'pageheader.php'; ?>
+      <?php include '../all/pageheader.php'; ?>
       <div class="container" style="margin-top: 20px;">
           <div class="row">
             <div class="col-lg-6 col-sm-6 col-xs-6">

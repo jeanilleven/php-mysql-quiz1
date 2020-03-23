@@ -37,16 +37,16 @@
             <div class='collapse navbar-collapse' id='navbarSupportedContent'>
               <ul class='navbar-nav mr-auto'>
                 <li class='nav-item active'>
-                  <a style='color:white;'class='nav-link' href='./home.php'>Home <span class='sr-only'>(current)</span></a>
+                  <a style='color:white;'class='nav-link' href='./admin./home.php'>Home <span class='sr-only'>(current)</span></a>
                 </li>
                 <li class='nav-item dropdown'>
                   <a style='color:white;' class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                     Manage
                   </a>
                   <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-                    <a class='dropdown-item' href='./manage-faculty.php'>Faculty</a>
-                    <a class='dropdown-item' href='./manage-students.php'>Students</a>
-                    <a class='dropdown-item' href='./manage-rooms.php'>Rooms</a>
+                  <a class='dropdown-item' href='../admin/manage-faculty.php'>Faculty</a>
+                    <a class='dropdown-item' href='../admin/manage-students.php'>Students</a>
+                    <a class='dropdown-item' href='../admin/manage-rooms.php'>Rooms</a>
                   </div>
                 </li>
                 <li class='nav-item dropdown'>
@@ -54,9 +54,9 @@
                     Enrollment
                   </a>
                   <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-                    <a class='dropdown-item' href='./enrollment-student.php'>Enrollment - Students</a>
-                    <a class='dropdown-item' href='./enrollment-subjects.php'>Enrollment - Subjects</a>
-                    <a class='dropdown-item' href='./enrollment-subject-offerings.php'>Enrollment - Subject Offerings</a>
+                    <a class='dropdown-item' href='../admin/enrollment-student.php'>Enrollment - Students</a>
+                    <a class='dropdown-item' href='../admin/enrollment-subjects.php'>Enrollment - Subjects</a>
+                    <a class='dropdown-item' href='../admin/enrollment-subject-offerings.php'>Enrollment - Subject Offerings</a>
                   </div>
                 </li>
             </div>

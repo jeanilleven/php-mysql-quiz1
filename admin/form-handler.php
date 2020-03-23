@@ -1,4 +1,6 @@
 <?php 
+    include '../all/translators.php';
+
     // Manage Student Functions
 
     function removeStudent($id, $conn){
@@ -75,8 +77,8 @@
     // Enrollment - Subject Offerings Functions
 
     function addSubjOffering($faculty, $subject, $room, $conn){
-        $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at) VALUES('$faculty','$room', '$subject', now())";
-        mysqli_query($conn, $query);
+        // $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at) VALUES('$faculty','$room', '$subject', now())";
+        // mysqli_query($conn, $query);
 
     }
 
@@ -89,4 +91,6 @@
             echo "<script>alert('Students should unenroll from this Subject Offering if you wish to proceed.');</script>";
         }
     }
+
+
 ?>
