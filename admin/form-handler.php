@@ -88,11 +88,6 @@
         // IN THIS FUNCTION, UPDATE BOTH OFFERED_SUBJECTS AND SCHEDULES TABLE
 
         foreach($day as $key=>$value){
-            // $d = int_to_day($key+1);
-            // $s = int_to_start_time($start[$key]);
-            // $e = int_to_start_time($end[$key]);
-            //echo $d." => ".$s." - ".$e."<br>";
-
             $d = $key+1;
             $s = $start[$key];
             $e = $end[$key];
@@ -113,5 +108,10 @@
         }
     }
 
+    function editFacultySubjOffering($id, $faculty, $conn){
+        $query = "UPDATE offered_subjects SET faculty_id = '$faculty', updated_at = now() WHERE id = $id ";
+        mysqli_query($conn, $query);
+
+    }
 
 ?>

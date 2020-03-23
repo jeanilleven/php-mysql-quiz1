@@ -14,6 +14,10 @@
   if(isset($_GET['remove-SO-btn'])){
     removeSubjOffering($_GET['id'], $conn);
   }
+
+  if(isset($_GET['edit-faculty-btn'])){
+    editFacultySubjOffering($_GET['id'], $_GET['faculty'], $conn);
+  }
 ?>
 
 
@@ -79,13 +83,13 @@
                             
                             echo "</td>
                               <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."
-                                <button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
+                                <button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-faculty-modal'>
                                   <i class='fas fa-pencil-alt'></i>
                                 </button>
                               </td>
                               <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
                               <td style=' text-align: right;'>
-                                <button onclick='getID(this.id)' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
+                                <button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
                                   <i class='far fa-trash-alt'></i>
                                 </button>
                               </td>
@@ -211,6 +215,51 @@
                     </div>
                   </div>
 
+  <!-- EDIT FACULTY - SUBJECT OFFERING MODAL -->
+        <div class="modal fade" id="edit-faculty-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5>Change Faculty</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                  <form action="enrollment-subject-offerings.php" method="get" >
+                    <input type="hidden" class="id" name="id" value="">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text" ><i class='	fas fa-chalkboard-teacher'></i></span>
+                      </div>
+                      
+                      <select required  name="faculty" class="form-control">
+                        <option value="" class='faculty' >Faculty</option>
+                          <?php
+                            $faculty = mysqli_query($conn, "select * from faculty order by last_name asc");
+                            foreach($faculty as $f){
+                              if($f['deleted_at']==null||$f['deleted_at']=="0000-00-00"){
+                                echo "
+                                  <option value='".$f['id']."'>".$f['first_name']." ".$f['last_name']."</option>
+                                ";
+                              }
+                            }
+                          ?>  
+                        </select>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      
+                      <button type="submit" name="edit-faculty-btn" value="1"class="btn btn-success">Save Changes</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>          
+          </div>
+
+
   <!-- DELETE SUBJECT OFFERING MODAL -->
       <div class="modal fade" id="delete-SO-modal" tabindex="-1" role="dialog" aria-labelledby="delete-SO-modal" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -244,8 +293,10 @@
   // FOR EDIT AND DELETE MODAL
   function getID(i){
     var value = $('#'+i+" td:nth-child(6) button").attr('value');
+
+    alert(value);
     $('.id').val(value);
-    // $('.name').val($('#'+i+" td:nth-child(1)").html());
+    $('.faculty').html($('#'+i+" td:nth-child(4)").html());
     // $('.capacity').val($('#'+i+" td:nth-child(2)").html());
   }
 
