@@ -65,27 +65,35 @@
                                 <th scope="col">Subject</th>
                                 <th scope="col">Room</th>
                                 <th scope="col">Schedule</th>
-                                <th scope="col">Start Term</th>
                                 <th></th>
                                 <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
-                                $query = "SELECT subjects.code, subjects.name AS subject_name, rooms.name AS room_name, schedules.day, schedules.time_start, schedules.time_end FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id INNER JOIN rooms ON offered_subjects.room_id=rooms.id INNER JOIN schedules ON offered_subjects.id=schedules.offered_subject_id WHERE offered_subjects.faculty_id =".$_SESSION['account_id'];                               
+                                $query = "SELECT offered_subjects.id, subjects.id AS subject_id, subjects.code, subjects.name AS subject_name, rooms.name AS room_name FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id INNER JOIN rooms ON offered_subjects.room_id=rooms.id WHERE offered_subjects.faculty_id =".$_SESSION['account_id'];                               
                                 $res = mysqli_query($conn, $query);
+                                $prev_id = 0;
                                 foreach($res as $r):?>
                                     <!-- /**
                                         *TODO: consider deleted_at 
                                      */ -->
-                                    <!-- <?php if($r['deleted_at']==null || $r['deleted_at']=='0000-00-00'):?> -->
-                                        <tr>
-                                            <td style=' text-align: left;'>[<?php echo $r['subject_code']?>] <?php echo $r['subject_name'] ?></td>
-                                            <td style=' text-align: left;'><?php echo $r['room_name']?></td>
-                                            <td style=' text-align: left;'><?php echo int_to_day($r['day'])?></td>
-                                            <td style=' text-align: left;'></td>
-                                        </tr>
-                                    <!-- <?php endif?> -->
+                                        
+                                    <tr>
+                                        <td style=' text-align: left;'>[<?php echo $r['code']?>] <?php echo $r['subject_name'] ?></td>
+                                        <td style=' text-align: left;'><?php echo $r['room_name']?></td>
+                                        <td style=' text-align: left;'>
+                                            <?php
+                                                $query = "SELECT * FROM schedules WHERE offered_subject_id=".$r['id'];                               
+                                                $scheds = mysqli_query($conn, $query);
+                                            ?>
+                                            <?php foreach($scheds as $s):?>
+                                                <li><?php echo int_to_day($s['day'])?> - <?php echo int_to_start_time($s['time_start']) ?> to <?php echo int_to_end_time($s['time_end']) ?></li>
+                                            <?php endforeach?>
+                                            
+                                        </td>
+                                        <td style=' text-align: left;'></td>
+                                    </tr> 
                                 <?php endforeach?>
                             </tbody>
                             </table>
