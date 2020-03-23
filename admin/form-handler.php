@@ -86,11 +86,8 @@
         
         //go through per day sa $table, e compare na dayun ang dates. 
 
-        $conflict = 0;
-
         foreach($day as $key => $value){
-            $d = $key+1;
-            
+            $conflict = 0;
             while($row=mysqli_fetch_assoc($table)){
                 if($start[$key] >= $row['time_start'] && $end[$key] <= $row['time_end']){
                     $conflict = 1;
@@ -105,55 +102,83 @@
             }
 
             if($conflict){
-                echo "Conflicting sched";
+                echo "<script>alert('Cannot add subject offering. Schedule is in conflict with the teacher.');</script>";
             }else{
-                echo "not conflicting sched";
+                //UPDATING OFFERED_SUBJECTS
+                $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at)
+                          VALUES('$faculty','$room', '$subject', now())";
+                mysqli_query($conn, $query);
+
+                $id = mysqli_query($conn, "SELECT * FROM offered_subjects ORDER BY id desc LIMIT 1");
+                $id = mysqli_fetch_assoc($id);
+
+                $id = $id['id'];
+
+
+                //UPDATING SCHEDULES
+                foreach($day as $indx=>$value){
+                    $d = $indx+1;
+                    $s = $start[$indx];
+                    $e = $end[$indx];
+
+                    mysqli_query($conn, "INSERT INTO schedules(offered_subject_id, day, time_start, time_end, created_at)
+                                VALUES('$id','$d', '$s', '$e', now() )");
+                }
             }
         }
-
-        if($conflict==0){
-            //UPDATING OFFERED_SUBJECTS
-            $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at)
-                      VALUES('$faculty','$room', '$subject', now())";
-            mysqli_query($conn, $query);
-
-            $id = mysqli_query($conn, "SELECT * FROM offered_subjects ORDER BY id desc LIMIT 1");
-            $id = mysqli_fetch_assoc($id);
-
-            $id = $id['id'];
-
-        
-            //UPDATING SCHEDULES
-            foreach($day as $indx=>$value){
-                $d = $indx+1;
-                $s = $start[$indx];
-                $e = $end[$indx];
-
-                mysqli_query($conn, "INSERT INTO schedules(offered_subject_id, day, time_start, time_end, created_at)
-                                 VALUES('$id','$d', '$s', '$e', now() )");
-            }
-        }
-        
-        
     }
 
     function removeSubjOffering($id, $conn){
         $s = mysqli_query($conn, "select*from enrolled_students where offering_id=$id");
 
         if(mysqli_num_rows($s)==0){
-            mysqli_query($conn, "UPDATE offered_subjects SET deleted_at = now() WHERE id = $id");
+            mysqli_query($conn, "UPDATE offered_subjects SET deleted_at = now() WHERE id = $id;");
+            mysqli_query($conn, "DELETE FROM schedules WHERE offered_subject_id = $id");
         }else{
             echo "<script>alert('Students should unenroll from this Subject Offering if you wish to proceed.');</script>";
         }
     }
 
-    function editFacultySubjOffering($id, $faculty, $conn){
-        
+    function editFacultySubjOffering($id, $faculty_id, $conn){
 
+        $sched = mysqli_query($conn, "SELECT * FROM schedules WHERE id = $id");
 
-        $query = "UPDATE offered_subjects SET faculty_id = '$faculty', updated_at = now() WHERE id = $id ";
-        mysqli_query($conn, $query);
+        $faculty = mysqli_query($conn,"SELECT * FROM schedules LEFT JOIN offered_subjects 
+            ON schedules.offered_subject_id = offered_subjects.id 
+            WHERE offered_subjects.faculty_id = $faculty_id ");
 
+        $conflict = 0;
+
+        //Kuhaa ang sched sa offering... 
+        //Usa-usaha ug compare according to day, start and end.
+
+        while($offering_sched = mysqli_fetch_assoc($sched)){
+            if($conflict==0){
+                while($faculty_sched = mysqli_fetch_assoc($faculty)){
+                    if($offering_sched['day']==$faculty_sched['day']){
+                        if($offering_sched['time_start'] >= $faculty_sched['time_start'] && $offering_sched['time_end'] <= $faculty_sched['time_end']){
+                            $conflict = 1;
+                            break;
+                        }else if($offering_sched['time_end'] > $faculty_sched['time_start'] && $offering_sched['time_start'] < $faculty_sched['time_end']){
+                            $conflict = 1;
+                            break;
+                        }else if($offering_sched['time_start'] > $faculty_sched['time_end'] &&$offering_sched['time_end'] > $faculty_sched['time_start']){
+                            $conflict = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 
+
+        if($conflict){
+            echo "<script>alert('Cannot replace teacher. Schedule is in conflict with the teacher.');</script>";
+        }else{
+            $query = "UPDATE offered_subjects SET faculty_id = '$faculty_id', updated_at = now() WHERE id = $id ";
+            mysqli_query($conn, $query);
+        }
     }
 
 ?>

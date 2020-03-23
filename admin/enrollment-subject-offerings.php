@@ -293,12 +293,11 @@
 
   // FOR EDIT AND DELETE MODAL
   function getID(i){
-    var value = $('#'+i+" td:nth-child(6) button").attr('value');
+    var value = $('#'+i+" td:nth-child(7) button").attr('value');
 
-    alert(value);
+    //alert(value);
     $('.id').val(value);
     $('.faculty').html($('#'+i+" td:nth-child(4)").html());
-    // $('.capacity').val($('#'+i+" td:nth-child(2)").html());
   }
 
   // FOR TIME SCHEDULE DROPDOWN
