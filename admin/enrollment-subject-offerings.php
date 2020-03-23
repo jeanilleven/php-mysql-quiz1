@@ -5,7 +5,7 @@
   if(isset($_GET['add-SO-btn'])){
     //addSubjOffering($_GET['faculty'],$_GET['subject'], $_GET['room'], $conn);
     if(isset($_GET['day'])){
-      echo "<script>alert('naay sod')</script>";
+      addSubjOffering($_GET['faculty'],$_GET['subject'], $_GET['room'], $_GET['day'], $_GET['start'], $_GET['end'],$conn);
     }else{
       echo "<script>alert('Add atleast one schedule.')</script>";
     }
@@ -56,6 +56,10 @@
                             $c = mysqli_fetch_assoc($c);
                             $r = mysqli_query($conn, "select * from rooms where id =".$o['room_id']);
                             $r = mysqli_fetch_assoc($r);
+                            
+                            $sc = mysqli_query($conn, "select*from schedules where offered_subject_id =".$o['room_id']." order by day asc");
+                            
+
                             $s = mysqli_query($conn, "select*from enrolled_students where offering_id=".$o['id']);
                             $s = mysqli_num_rows($s);
                             $i = mysqli_query($conn, "select*from faculty where id=".$o['faculty_id']);
@@ -64,13 +68,26 @@
                             <tr id='O".$o['id']."'>
                               <td style=' text-align: left;'>".$c['code']." ".$c['name']."</td>
                               <td style=' text-align: center;'>".$r['name']."</td>
-                              <td></td>
-                              <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."</td>
+                              <td style=' text-align: center;'>";
+
+                            while($sched = mysqli_fetch_assoc($sc)){
+                              $day = int_to_day($sched['day']);
+                              $start = int_to_start_time($sched['time_start']);
+                              $end = int_to_start_time($sched['time_end']);
+                              echo $day." ".$start." - ".$end."<br>";
+                            }
+                            
+                            echo "</td>
+                              <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."
+                                <button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
+                                  <i class='fas fa-pencil-alt'></i>
+                                </button>
+                              </td>
                               <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
-                              <td style=' text-align: right;'><button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
-                                  <i class='fas fa-pencil-alt'></i></button>
-                                  <button onclick='getID(this.id)' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
-                                  <i class='far fa-trash-alt'></i></button>
+                              <td style=' text-align: right;'>
+                                <button onclick='getID(this.id)' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
+                                  <i class='far fa-trash-alt'></i>
+                                </button>
                               </td>
                             </tr>
                           ";
@@ -85,7 +102,7 @@
           </div>
       </div>
 
-      <!-- Add Subject Offering Modal -->
+      <!-- ADD SUBJECT OFFERING MODAL -->
                   <div class="modal fade" id="add-subject-offering-modal" tabindex="-1" role="dialog" aria-labelledby="#add-subject-offering-modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -169,10 +186,10 @@
                                               <div class='day'>
                                                 $d
                                               </div>
-                                              <select disabled class='form-control time_dropdown'>
+                                              <select name='start[$ctr]' required disabled class='form-control time_dropdown'>
                                                 <option value=''>Start Time</option>
                                               </select>
-                                              <select disabled class='form-control time_dropdown' >
+                                              <select name='end[$ctr]' required disabled class='form-control time_dropdown' >
                                                 <option value='' >End Time</option>
                                               </select>
                                             </div>

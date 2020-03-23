@@ -16,14 +16,14 @@ function int_to_start_time($int){
     if($int < 30){
         $h = 0;
         $m = '00';
-        $p = 'am';
+        $p = 'AM';
         $h = 6 + ceil($int/2);
         if($int%2 == 0){
             $m = '30';
         }
         if($h > 12){
             $h -= 12;
-            $p = 'pm';
+            $p = 'PM';
         }
         return $h.":".$m." ".$p;
     }else{
