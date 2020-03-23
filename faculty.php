@@ -1,6 +1,6 @@
 <?php 
 
-    include 'connect_to_db.php';
+    include './all/connect_to_db.php';
 
     include './all/translators.php';
 
@@ -86,7 +86,7 @@
                                             <td style=' text-align: left;'></td>
                                         </tr>
                                     <!-- <?php endif?> -->
-                                <?php endforeach?>?>
+                                <?php endforeach?>
                             </tbody>
                             </table>
                         </div>
