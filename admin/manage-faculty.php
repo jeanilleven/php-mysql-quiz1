@@ -72,19 +72,17 @@
                               <span class="input-group-text" id="start_term"><i class='far fa-calendar-alt'></i></span>
                             </div>
                             <select required="" name="year" class="form-control">
-                              <optgroup label="Start Year">
+                              <option value="">Start Year</option>
                                 <option value="2019">2019</option>
                                 <option value="2020">2020</option>
-                              </optgroup>
                             </select>
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="start_term"><i class='far fa-clock'></i></span>
                             </div>
                             <select required name="term" class="form-control">
-                              <optgroup label="Start Term">
+                            <option value="">Start Year</option>
                                 <option value="First Semester">First Semester</option>
                                 <option value="Second Semester">Second Semester</option>
-                              </optgroup>
                             </select>
                           </div>
                         </div>
@@ -98,7 +96,7 @@
                   </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row"  style="margin-bottom: 20px;">
             <div class="col-lg-12">
               <div class="table-card">
                 <div class="card-body">

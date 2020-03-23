@@ -10,20 +10,20 @@
             <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous'></script>
             <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
             <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-            <script src='manage-enrollment-nav-js.js'></script>
-            <link rel='stylesheet' href='index-styles.css' type='text/css'>
+            <script src='./admin/manage-enrollment-nav-js.js'></script>
+            <link rel='stylesheet' href='./admin/index-styles.css' type='text/css'>
         </head>
         <body>
           <nav id='header' style='background-color: #f8f9fa;'>
-            <img id='navbar-pic' height='50' src='../pics/nav-logo.png' style='margin-left: 50px;'>
+            <img id='navbar-pic' height='50' src='./pics/nav-logo.png' style='margin-left: 50px;'>
             <span  style='color:#07500b; ' class='dropdown'>
               <a style='box-shadow:none;'id='user-dropdown' class='btn btn-secondary dropdown-toggle' href='#' role='button' id='user-dropdown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                <img id='user-icon' style='border-radius: 50%; border: 1px solid gray;' src='../pics/man-icon.png' alt='icon'>
+                <img id='user-icon' style='border-radius: 50%; border: 1px solid gray;' src='./pics/man-icon.png' alt='icon'>
                 <span style='color:#07500b; ' id='user-id'>Admin</span>
               </a>
               <span class='dropdown-menu' aria-labelledby='user-dropdown'>
                 <a class='dropdown-item' data-toggle='modal' data-target='#change-pw-modal' type='button' style='cursor:pointer'>Change Password</a>
-                <a class='dropdown-item' href='../index.php'>Logout</a>
+                <a class='dropdown-item' href='../index.php?end=1'>Logout</a>
               </span>
             </span>
           </nav>
@@ -76,29 +76,30 @@
                   </button>
                 </div>
               <div class='modal-body'>
+                <p style='color: red;'>*Admin account is hardcoded. You cannot change password.</p>
                 <form>
                   <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                       <span class='input-group-text' id='old_pw'><i class='fas fa-lock'></i></span>
                     </div>
-                    <input name='old-pw' type='password' class='form-control' placeholder='Old Password' aria-label='Old Password' aria-describedby='basic-addon1'>
+                    <input disabled name='old-pw' type='password' class='form-control' placeholder='Old Password' aria-label='Old Password' aria-describedby='basic-addon1'>
                   </div>
                   <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                       <span class='input-group-text' id='old_pw'><i class='fas fa-lock'></i></span>
                     </div>
-                    <input name='new-pw' type='password' class='form-control' placeholder='New Password' aria-label='pw1' aria-describedby='basic-addon1'>
+                    <input disabled name='new-pw' type='password' class='form-control' placeholder='New Password' aria-label='pw1' aria-describedby='basic-addon1'>
                   </div>
                   <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                       <span class='input-group-text' id='old_pw'><i class='fas fa-lock'></i></span>
                     </div>
-                    <input name='pw2' type='password' class='form-control' placeholder='Confirm Password' aria-label='pw2' aria-describedby='basic-addon1'>
+                    <input disabled name='pw2' type='password' class='form-control' placeholder='Confirm Password' aria-label='pw2' aria-describedby='basic-addon1'>
                   </div>
                 </div>
                 <div class='modal-footer'>
                   <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                  <button type='submit' class='btn btn-primary'>Save changes</button>
+                  <button type='submit' class='btn btn-success'>Save changes</button>
                 </div>
                 </form>
             </div>

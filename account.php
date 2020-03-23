@@ -3,6 +3,7 @@
     include 'all/connect_to_db.php';
     session_start();
 
+        
     if(isset($_GET['end']) && $_GET['end'] == true){
         session_destroy();
         header('location: ../index.php');
@@ -20,7 +21,8 @@
     // all "home" links should link to account.php NOT the admin.php, students.php and faculty.php
 
     if($_SESSION['account_id'] == 'admin' && $_SESSION['account_password'] == 'admin'){
-        header('location: ./admin/home.php');
+        include './admin/home.php';
+        //header('location: ./admin/home.php');
     }else{
         $_SESSION['account_password'] = md5($_SESSION['account_password']);
         $account_query = "SELECT * FROM ".$_SESSION['account_type']." WHERE id=".$_SESSION['account_id']." AND password='".$_SESSION['account_password']."'";
