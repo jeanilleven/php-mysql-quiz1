@@ -1,6 +1,7 @@
 <?php
   include '../all/connect_to_db.php';
   include 'form-handler.php';
+  include '../all/translators.php';
 
   if(isset($_GET['add-SO-btn'])){
     addSubjOffering($_GET['faculty'],$_GET['subject'], $_GET['room'], $conn);
