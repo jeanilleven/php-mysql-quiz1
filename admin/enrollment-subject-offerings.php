@@ -6,6 +6,10 @@
   if(isset($_GET['add-SO-btn'])){
     addSubjOffering($_GET['faculty'],$_GET['subject'], $_GET['room'], $conn);
   }
+
+  if(isset($_GET['remove-SO-btn'])){
+    removeSubjOffering($_GET['id'], $conn);
+  }
 ?>
 
 
@@ -67,28 +71,102 @@
                                   }
                                 }
                               ?>  
-                            </select>
-                          </div>
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" ><i class='	fas fa-chalkboard-teacher'></i></span>
+                              </select>
                             </div>
-                            <select required  name="faculty" class="form-control">
-                              <option value="">Faculty</option>
-                              <?php
-                                $faculty = mysqli_query($conn, "select * from faculty order by last_name asc");
-                                foreach($faculty as $f){
-                                  if($f['deleted_at']==null||$f['deleted_at']=="0000-00-00"){
-                                    echo "
-                                      <option value='".$f['id']."'>".$f['first_name']." ".$f['last_name']."</option>
-                                    ";
+                            <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" ><i class='	fas fa-chalkboard-teacher'></i></span>
+                              </div>
+                              <select required  name="faculty" class="form-control">
+                                <option value="">Faculty</option>
+                                <?php
+                                  $faculty = mysqli_query($conn, "select * from faculty order by last_name asc");
+                                  foreach($faculty as $f){
+                                    if($f['deleted_at']==null||$f['deleted_at']=="0000-00-00"){
+                                      echo "
+                                        <option value='".$f['id']."'>".$f['first_name']." ".$f['last_name']."</option>
+                                      ";
+                                    }
                                   }
-                                }
-                              ?>  
-                            </select>
+                                ?>  
+                              </select>
+                            </div>
+
+                            <div class="input-group mb-3">
+                              <h6>Schedule</h6>
+                              <div class="input-group mb-3 sched">
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      <input type="checkbox" value="1" name="day[]" id="mon" aria-label="1" >
+                                    </div>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      Mon
+                                    </div>
+                                  </div>
+                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
+                              </div>
+
+                              <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      <input type="checkbox" value="2" name="day[]" id="tue" aria-label="1" >
+                                    </div>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      Tues
+                                    </div>
+                                  </div>
+                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
+                              </div>
+
+                              <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      <input type="checkbox" value="3" name="day[2]" id="wed" aria-label="1" >
+                                    </div>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      Wed
+                                    </div>
+                                  </div>
+                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
+                              </div>
+
+                              <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      <input type="checkbox" value="4" name="day[3]" id="thur" aria-label="1" >
+                                    </div>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      Thur
+                                    </div>
+                                  </div>
+                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
+                              </div>
+
+                              <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      <input type="checkbox" value="5" name="day[4]" id="fri" aria-label="1" >
+                                    </div>
+                                  </div>
+                                  <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                      Frida
+                                    </div>
+                                  </div>
+                                  <input type="text" class="form-control" aria-label="Text input with checkbox">
+                              </div>
+                            </div>
+
                           </div>
-                        </div>
-                        <div class="modal-footer">
+                          <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                           <button type="submit" name="add-SO-btn" value="1" class="btn btn-success">Add</button>
                         </div>
@@ -137,7 +215,7 @@
                               <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
                               <td style=' text-align: right;'><button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-room-modal'>
                                   <i class='fas fa-pencil-alt'></i></button>
-                                  <button onclick='getID(this.id)' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-room-modal'>
+                                  <button onclick='getID(this.id)' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
                                   <i class='far fa-trash-alt'></i></button>
                               </td>
                             </tr>
@@ -152,5 +230,39 @@
             </div>
           </div>
       </div>
+
+  <!-- DELETE SUBJECT OFFERING MODAL -->
+      <div class="modal fade" id="delete-SO-modal" tabindex="-1" role="dialog" aria-labelledby="delete-SO-modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete this Subject Offering?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="enrollment-subject-offerings.php" method="get">
+                      <input type="hidden" class="id" name="id" value="">
+                      <button type="submit" name="remove-SO-btn" value="1"class="btn btn-danger">Remove</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>          
+          </div>
   </body>
 </html>
+<script>
+
+  function getID(i){
+    var value = $('#'+i+" td:nth-child(6) button").attr('value');
+    $('.id').val(value);
+    // $('.name').val($('#'+i+" td:nth-child(1)").html());
+    // $('.capacity').val($('#'+i+" td:nth-child(2)").html());
+  }
+
+</script>
