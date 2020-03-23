@@ -16,18 +16,39 @@ function int_to_start_time($int){
     if($int < 30){
         $h = 0;
         $m = '00';
+        $p = 'am';
         $h = 6 + ceil($int/2);
         if($int%2 == 0){
             $m = '30';
         }
-        return $h.":".$m;
+        if($h > 12){
+            $h -= 12;
+            $p = 'pm';
+        }
+        return $h.":".$m." ".$p;
     }else{
         return 'ERR';
     }
 }
 
 function int_to_end_time($int){
-    return int_to_start_time($int+1);
+    $int++;
+    if($int < 30){
+        $h = 0;
+        $m = '00';
+        $p = 'am';
+        $h = 6 + ceil($int/2);
+        if($int%2 == 0){
+            $m = '30';
+        }
+        if($h > 12){
+            $h -= 12;
+            $p = 'pm';
+        }
+        return $h.":".$m." ".$p;
+    }else{
+        return 'ERR';
+    }
 }
 
 
