@@ -1,6 +1,6 @@
 <?php 
 
-    include 'connect_to_db.php';
+    include 'all/connect_to_db.php';
     session_start();
 
     if(isset($_GET['end']) && $_GET['end'] == true){
@@ -22,6 +22,7 @@
     if($_SESSION['account_id'] == 'admin' && $_SESSION['account_password'] == 'admin'){
         header('location: ./admin/home.php');
     }else{
+        $_SESSION['account_password'] = md5($_SESSION['account_password']);
         $account_query = "SELECT * FROM ".$_SESSION['account_type']." WHERE id=".$_SESSION['account_id']." AND password='".$_SESSION['account_password']."'";
         $res = $conn->query($account_query);
         $conn->close();
