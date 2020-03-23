@@ -77,24 +77,63 @@
     // Enrollment - Subject Offerings Functions
 
     function addSubjOffering($faculty, $subject, $room, $day, $start, $end, $conn){
-        $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at) VALUES('$faculty','$room', '$subject', now())";
-        mysqli_query($conn, $query);
+        // IN THIS FUNCTION, UPDATE BOTH OFFERED_SUBJECTS AND SCHEDULES TABLE. 
 
-        $id = mysqli_query($conn, "SELECT * FROM offered_subjects ORDER BY id desc LIMIT 1");
-        $id = mysqli_fetch_assoc($id);
+        $table = mysqli_query($conn,"SELECT * FROM schedules LEFT JOIN offered_subjects 
+                                     ON schedules.offered_subject_id = offered_subjects.id 
+                                     WHERE offered_subjects.faculty_id = $faculty ");
 
-        $id = $id['id'];
+        
+        //go through per day sa $table, e compare na dayun ang dates. 
 
-        // IN THIS FUNCTION, UPDATE BOTH OFFERED_SUBJECTS AND SCHEDULES TABLE
+        $conflict = 0;
 
-        foreach($day as $key=>$value){
+        foreach($day as $key => $value){
             $d = $key+1;
-            $s = $start[$key];
-            $e = $end[$key];
+            
+            while($row=mysqli_fetch_assoc($table)){
+                if($start[$key] >= $row['time_start'] && $end[$key] <= $row['time_end']){
+                    $conflict = 1;
+                    break;
+                }else if($end[$key] > $row['time_start'] && $start[$key] < $row['time_end']){
+                    $conflict = 1;
+                    break;
+                }else if($start[$key] > $row['time_end'] && $end[$key] > $row['time_start']){
+                    $conflict = 1;
+                    break;
+                }
+            }
 
-            mysqli_query($conn, "INSERT INTO schedules(offered_subject_id, day, time_start, time_end, created_at)
-                                 VALUES('$id','$d', '$s', '$e', now() )");
+            if($conflict){
+                echo "Conflicting sched";
+            }else{
+                echo "not conflicting sched";
+            }
         }
+
+        if($conflict==0){
+            //UPDATING OFFERED_SUBJECTS
+            $query = "INSERT INTO offered_subjects(faculty_id, room_id, subject_id, created_at)
+                      VALUES('$faculty','$room', '$subject', now())";
+            mysqli_query($conn, $query);
+
+            $id = mysqli_query($conn, "SELECT * FROM offered_subjects ORDER BY id desc LIMIT 1");
+            $id = mysqli_fetch_assoc($id);
+
+            $id = $id['id'];
+
+        
+            //UPDATING SCHEDULES
+            foreach($day as $indx=>$value){
+                $d = $indx+1;
+                $s = $start[$indx];
+                $e = $end[$indx];
+
+                mysqli_query($conn, "INSERT INTO schedules(offered_subject_id, day, time_start, time_end, created_at)
+                                 VALUES('$id','$d', '$s', '$e', now() )");
+            }
+        }
+        
         
     }
 
@@ -109,6 +148,9 @@
     }
 
     function editFacultySubjOffering($id, $faculty, $conn){
+        
+
+
         $query = "UPDATE offered_subjects SET faculty_id = '$faculty', updated_at = now() WHERE id = $id ";
         mysqli_query($conn, $query);
 

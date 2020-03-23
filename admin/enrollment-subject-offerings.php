@@ -46,6 +46,7 @@
                         <th style=' text-align: center;'scope="col">Room</th>
                         <th style=' text-align: center;'scope="col">Schedule</th>
                         <th style=' text-align: left;'scope="col">Instructor</th>
+                        <th></th>
                         <th style=' text-align: center;'scope="col">Enrolled</th>
                         <th></th>
                         <th></th>
@@ -61,8 +62,8 @@
                             $r = mysqli_query($conn, "select * from rooms where id =".$o['room_id']);
                             $r = mysqli_fetch_assoc($r);
                             
-                            $sc = mysqli_query($conn, "select*from schedules where offered_subject_id =".$o['room_id']." order by day asc");
-                            
+                            $sc = mysqli_query($conn, "select*from schedules where offered_subject_id =".$o['id']." order by day asc");
+                    
 
                             $s = mysqli_query($conn, "select*from enrolled_students where offering_id=".$o['id']);
                             $s = mysqli_num_rows($s);
@@ -73,7 +74,6 @@
                               <td style=' text-align: left;'>".$c['code']." ".$c['name']."</td>
                               <td style=' text-align: center;'>".$r['name']."</td>
                               <td style=' text-align: center;'>";
-
                             while($sched = mysqli_fetch_assoc($sc)){
                               $day = int_to_day($sched['day']);
                               $start = int_to_start_time($sched['time_start']);
@@ -82,7 +82,8 @@
                             }
                             
                             echo "</td>
-                              <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."
+                              <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."</td>
+                              <td>
                                 <button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' style=' margin-right:5px;' type='button' class='btn btn-warning' data-toggle='modal' data-target='#edit-faculty-modal'>
                                   <i class='fas fa-pencil-alt'></i>
                                 </button>
@@ -287,7 +288,7 @@
 </html>
 <script>
 
-  $('.day').css("width", "150px");
+  $('.day').css("width", "200px");
   $('.day').css("padding", "10px");
 
   // FOR EDIT AND DELETE MODAL

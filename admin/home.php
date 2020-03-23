@@ -2,7 +2,7 @@
   //include '../all/connect_to_db.php';
   
 ?>
-  <?php include '../all/homeheader.php'; ?>
+  <?php include '../all/pageheader.php'; ?>
 
   <div class="container">
     <div class="row">
