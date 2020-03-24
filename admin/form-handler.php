@@ -183,4 +183,33 @@
         }
     }
 
+
+    //Enrollment - Students Functions
+
+    function enrollStudent($student, $offering, $conn){
+        $enrollees = mysqli_query($conn, "SELECT*FROM enrolled_students WHERE offering_id = $offering");
+        $enrollees = mysqli_num_rows($enrollees);
+
+        $subject = mysqli_query($conn, "SELECT*FROM offered_subjects WHERE id = $offering AND deleted_at is NULL");
+        $subject = mysqli_fetch_assoc($subject);
+
+        $r = $subject['room_id'];
+        $room = mysqli_query($conn, "SELECT*from rooms WHERE id = $r AND deleted_at is NULL");
+        $room = mysqli_fetch_assoc($room);
+        
+        if($enrollees < $room['capacity']){
+           // check if in conflict ba with student 
+
+            $student_subjects = mysqli_query($conn, "SELECT*FROM enrolled_students WHERE id=$student AND deleted_at is NULL");
+            
+
+
+
+            mysqli_query($conn, "INSERT INTO enrolled_students(student_id, offering_id, created_at)
+                                 VALUES('$student', '$offering', now())");
+        }else{
+            echo "<script>alert('Slots were all taken. Cannot enroll student anymore.');</script>";
+        }
+    }
+
 ?>

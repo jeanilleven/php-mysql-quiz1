@@ -2,6 +2,10 @@
   include '../all/connect_to_db.php';
   include 'form-handler.php';
   
+
+  if(isset($_GET['enroll-stud-btn'])){
+    enrollStudent($_GET['student'], $_GET['offering'], $conn);
+  }
 ?>
 
   <?php include '../all/pageheader.php'; ?>
@@ -29,8 +33,8 @@
                         <th style=' text-align: center;'scope="col">Room</th>
                         <th style=' text-align: center;'scope="col">Schedule</th>
                         <th style=' text-align: left;'scope="col">Instructor</th>
-                        <th></th>
                         <th style=' text-align: center;'scope="col">Enrolled</th>
+                        <th></th>
                         <th></th>
                         <th></th>
                       </tr>
@@ -67,8 +71,11 @@
                             
                             echo "</td>
                               <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."</td>
-                              <td></td>
                               <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
+                              <td style=' text-align: center;'>
+                                <button type='button' class='btn btn-info'>
+                                  <i class='fa fa-eye'></i>
+                                </button>
                               </td>
                             </tr>
                           ";
@@ -121,7 +128,7 @@
                                   while($o = mysqli_fetch_assoc($offerings)){
                                     $code = mysqli_query($conn, "SELECT*FROM subjects where id = ".$o['subject_id']);
                                     $code = mysqli_fetch_assoc($code);
-                                    echo "<option value=''>".$o['id']." - ".$code['code']."</option>";
+                                    echo "<option value='".$o['id']."'>".$o['id']." - ".$code['code']."</option>";
                                   }
                                 ?>
                             </select>
