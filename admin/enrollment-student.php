@@ -104,7 +104,7 @@
                                 <?php 
                                   $students = mysqli_query($conn, "SELECT*FROM students where deleted_at is null order by last_name asc");
                                   while($s = mysqli_fetch_assoc($students)){
-                                    echo "<option value=''>".$s['last_name'].", ".$s['first_name']."</option>";
+                                    echo "<option value='".$s['id']."'>".$s['last_name'].", ".$s['first_name']."</option>";
                                   }
                                 ?>
                             </select>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-success">Add</button>
+                          <button type="submit" name='enroll-stud-btn' value='1' class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
