@@ -24,7 +24,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="table-card">
-                <div class="card-body">
+                <div class="card-body"  style='height: 440px; overflow-y:auto;'>
                 <table class="table " style="width: 100%; margin: auto;">
                     <thead class="thead-light">
                       <tr>
@@ -52,8 +52,8 @@
                             $sc = mysqli_query($conn, "select*from schedules where offered_subject_id =".$o['id']." order by day asc");
                     
 
-                            $s = mysqli_query($conn, "select*from enrolled_students where offering_id=".$o['id']);
-                            $s = mysqli_num_rows($s);
+                            $s = mysqli_query($conn, "select*from enrolled_students where offered_subject_id=".$o['id']);
+                            $st = mysqli_num_rows($s);
                             $i = mysqli_query($conn, "select*from faculty where id=".$o['faculty_id']);
                             $i = mysqli_fetch_assoc($i);
                             echo "
@@ -71,17 +71,54 @@
                             
                             echo "</td>
                               <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."</td>
-                              <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
+                              <td style=' text-align: center;'>".$st."/".$r['capacity']."</td>
                               <td style=' text-align: center;'>
-                                <button type='button' class='btn btn-info'>
+                                <button type='button' class='btn btn-info' data-toggle='modal' data-target='#Modal".$o['id']."'>
                                   <i class='fa fa-eye'></i>
                                 </button>
                               </td>
                             </tr>
+
+                            <!-- VIEW ENROLLEES -->
+
+                            <div class='modal fade' id='Modal".$o['id']."' tabindex='-1' role='dialog' aria-labelledby='' aria-hidden='true'>
+                              <div class='modal-dialog' role='document'>
+                                <div class='modal-content'>
+                                  <div class='modal-header'>
+                                    <h5 class='modal-title' id=''>".$o['id']." ".$c['code']." Enrolled Students</h5>
+                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                      <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class='modal-body' style='height:300px; overflow-y: auto;'>";
+
+                                  while($enr_stud = mysqli_fetch_assoc($s)){
+                                    $stud_id = $enr_stud['student_id'];
+                                    $student = mysqli_query($conn, "SELECT*FROM students where id = $stud_id");
+                                    $student = mysqli_fetch_assoc($student);
+
+                                    echo "<input style='margin-bottom: 3px;' class='form-control' disabled type='text' value='".$student['last_name'].", ".$student['first_name']."'>";
+                                  }
+
+                          echo"   </div>
+                                  <div class='modal-footer'>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
                           ";
+
+                         
+                          
+
+
                           } 
                         }
                       ?>
+
+                      
                     </tbody>
                   </table>
                 </div>
@@ -90,7 +127,7 @@
           </div>
       </div> 
 
-      <!-- Enroll Student Modal -->
+      <!-- ENROLL STUDENT MODAL -->
                   <div class="modal fade" id="enroll-student-modal" tabindex="-1" role="dialog" aria-labelledby="enroll-student-modal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">

@@ -99,7 +99,7 @@
           <div class="row"  style="margin-bottom: 20px;">
             <div class="col-lg-12">
               <div class="table-card">
-                <div class="card-body">
+                <div class="card-body"  style='height: 440px; overflow-y:auto;'>
                   <table class="table">
                     <thead class="thead-light">
                       <tr>

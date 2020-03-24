@@ -4,6 +4,8 @@
     // Manage Student Functions
 
     function removeStudent($id, $conn){
+
+        $id = mysqli_real_escape_string($conn, $id);
         $query = "UPDATE students SET deleted_at = now() WHERE id = $id";
         mysqli_query($conn, $query);
 
@@ -11,6 +13,9 @@
     }
 
     function addStudent($fname, $lname, $gender, $course, $year, $conn){
+        $fname = mysqli_real_escape_string($conn, $fname);
+        $lname = mysqli_real_escape_string($conn, $lname);
+
         $fname = ucfirst($fname);
         $lname = ucfirst($lname);
         $pw = md5($fname);
@@ -21,6 +26,13 @@
 
     // Manage Faculty Functions
     function addFaculty($fname, $lname, $email, $gender, $term, $year, $conn){
+        $fname = mysqli_real_escape_string($conn, $fname);
+        $lname = mysqli_real_escape_string($conn, $lname);
+        $email = mysqli_real_escape_string($conn, $email);
+        $gender = mysqli_real_escape_string($conn, $gender);
+        $term = mysqli_real_escape_string($conn, $term);
+        $year = mysqli_real_escape_string($conn, $year);
+
         $fname = ucfirst($fname);
         $lname = ucfirst($lname);
         $pw = md5($fname);
@@ -29,20 +41,33 @@
     }
 
     function removeFaculty($id, $conn){
-        $query = "UPDATE faculty SET deleted_at=now() WHERE id=$id";
-        mysqli_query($conn, $query);
+        $id = mysqli_real_escape_string($conn, $id);
+
+        $subjects = mysqli_query($conn, "SELECT*FROM offered_subjects where faculty_id = $id and deleted_at is null");
+        $subjects = mysqli_num_rows($subjects);
+
+        if($subjects){
+            echo "<script>alert('This staff is still handling one of the subjects offered. Cannot delete.');</script>";
+        }else{
+            $query = "UPDATE faculty SET deleted_at=now() WHERE id=$id";
+            mysqli_query($conn, $query);
+        }
+        
 
     }
 
 
     // Manage Room Functions
     function insertRoom($room , $capacity, $conn){
+        $room = mysqli_real_escape_string($conn, $room);
+        $$capacity = mysqli_real_escape_string($conn, $$capacity);
         $query = "INSERT INTO rooms(name, capacity, created_at) VALUES('$room', '$capacity', now())";
         mysqli_query($conn, $query);
 
     }
 
     function deleteRoom($id, $conn){
+        $id = mysqli_real_escape_string($conn, $id);
         $query = " UPDATE rooms SET deleted_at=now() WHERE id=$id";
         mysqli_query($conn, $query);
 
@@ -50,6 +75,10 @@
     }
 
     function editRoom($id, $name, $cap, $conn){
+        $id = mysqli_real_escape_string($conn, $id);
+        $name = mysqli_real_escape_string($conn, $name);
+        $cap = mysqli_real_escape_string($conn, $cap);
+
         $query = "UPDATE rooms SET name='$name', capacity='$cap', updated_at=now() WHERE id=$id";
         mysqli_query($conn, $query);
 
@@ -57,18 +86,27 @@
 
     // Enrollment - Subjects Functions
     function addSubject($name, $code, $conn){
+        $name = mysqli_real_escape_string($conn, $name);
+        $code = mysqli_real_escape_string($conn, $code);
+
         $query = "INSERT INTO subjects(name, code) VALUES('$name', '$code')";
         mysqli_query($conn, $query);
 
     }
 
     function removeSubject($id, $conn){
+        $id = mysqli_real_escape_string($conn, $id);
+
         $query = " UPDATE subjects SET deleted_at=now() WHERE id=$id";
         mysqli_query($conn, $query);
 
     }
 
     function editSubject($id, $name, $code, $conn){
+        $id = mysqli_real_escape_string($conn, $id);
+        $name = mysqli_real_escape_string($conn, $name);
+        $code = mysqli_real_escape_string($conn, $code);
+
         $query = "UPDATE subjects SET name='$name', code='$code', updated_at=now() WHERE id=$id";
         mysqli_query($conn, $query);
 
@@ -77,6 +115,12 @@
     // Enrollment - Subject Offerings Functions
 
     function addSubjOffering($faculty, $subject, $room, $day, $start, $end, $conn){
+        $faculty = mysqli_real_escape_string($conn, $faculty);
+        $subject = mysqli_real_escape_string($conn, $subject);
+        $room = mysqli_real_escape_string($conn, $room);
+        $day = mysqli_real_escape_string($conn, $day);
+        $start = mysqli_real_escape_string($conn, $start);
+        $end = mysqli_real_escape_string($conn, $end);
         // IN THIS FUNCTION, UPDATE BOTH OFFERED_SUBJECTS AND SCHEDULES TABLE. 
 
         $table = mysqli_query($conn,"SELECT * FROM schedules LEFT JOIN offered_subjects 
@@ -131,7 +175,9 @@
     }
 
     function removeSubjOffering($id, $conn){
-        $s = mysqli_query($conn, "select*from enrolled_students where offering_id=$id");
+        $id = mysqli_real_escape_string($conn, $id);
+
+        $s = mysqli_query($conn, "select*from enrolled_students where offered_subject_id=$id");
 
         if(mysqli_num_rows($s)==0){
             mysqli_query($conn, "UPDATE offered_subjects SET deleted_at = now() WHERE id = $id;");
@@ -142,8 +188,10 @@
     }
 
     function editFacultySubjOffering($id, $faculty_id, $conn){
+        $id = mysqli_real_escape_string($conn, $id);
+        $faculty_id = mysqli_real_escape_string($conn, $faculty_id);
 
-        $sched = mysqli_query($conn, "SELECT * FROM schedules WHERE id = $id");
+        $sched = mysqli_query($conn, "SELECT * FROM schedules WHERE offered_subject_id = $id");
 
         $faculty = mysqli_query($conn,"SELECT * FROM schedules LEFT JOIN offered_subjects 
             ON schedules.offered_subject_id = offered_subjects.id 
@@ -187,26 +235,54 @@
     //Enrollment - Students Functions
 
     function enrollStudent($student, $offering, $conn){
-        $enrollees = mysqli_query($conn, "SELECT*FROM enrolled_students WHERE offering_id = $offering");
+        $student = mysqli_real_escape_string($conn, $student);
+        $offering = mysqli_real_escape_string($conn, $offering);
+
+        //First, check if there is still slot left. 
+        $enrollees = mysqli_query($conn, "SELECT*FROM enrolled_students WHERE offered_subject_id = $offering");
         $enrollees = mysqli_num_rows($enrollees);
 
-        $subject = mysqli_query($conn, "SELECT*FROM offered_subjects WHERE id = $offering AND deleted_at is NULL");
+        $subject = mysqli_query($conn, "SELECT*FROM offered_subjects WHERE id = $offering ");
         $subject = mysqli_fetch_assoc($subject);
 
         $r = $subject['room_id'];
-        $room = mysqli_query($conn, "SELECT*from rooms WHERE id = $r AND deleted_at is NULL");
+        $room = mysqli_query($conn, "SELECT*from rooms WHERE id = $r");
         $room = mysqli_fetch_assoc($room);
         
         if($enrollees < $room['capacity']){
-           // check if in conflict ba with student 
+           // check if in conflict ba with student's schedule
 
-            $student_subjects = mysqli_query($conn, "SELECT*FROM enrolled_students WHERE id=$student AND deleted_at is NULL");
+            $conflict = 0;
             
+            $subjects_enrolled = mysqli_query($conn, "SELECT*FROM enrolled_students WHERE student_id = $student");
 
+            $offering_sched = mysqli_query($conn, "SELECT*FROM schedules WHERE offered_subject_id = $offering");
+            $offering_sched = mysqli_fetch_assoc($offering_sched);
 
+            while($se = mysqli_fetch_assoc($subjects_enrolled)){
+                $offered_subj = $se['offered_subject_id'];
+                $sched = mysqli_query($conn, "SELECT*FROM schedules WHERE offered_subject_id = $offered_subj");
+                $sched = mysqli_fetch_assoc($sched);
 
-            mysqli_query($conn, "INSERT INTO enrolled_students(student_id, offering_id, created_at)
+                if($sched['time_start'] >= $offering_sched['time_start'] && $sched['time_end'] <= $offering_sched['time_end']){
+                    $conflict = 1;
+                    break;
+                }else if($sched['time_end'] > $offering_sched['time_start'] && $sched['time_start'] < $offering_sched['time_end']){
+                    $conflict = 1;
+                    break;
+                }else if($sched['time_start'] > $offering_sched['time_end'] && $sched['time_end'] > $offering_sched['time_start']){
+                    $conflict = 1;
+                    break;
+                }
+            }
+
+            if($conflict){
+                echo "<script>alert('Cannot enroll student. Schedules will be in conflict.');</script>";
+            }else{
+                mysqli_query($conn, "INSERT INTO enrolled_students(student_id, offered_subject_id, created_at)
                                  VALUES('$student', '$offering', now())");
+            }
+        
         }else{
             echo "<script>alert('Slots were all taken. Cannot enroll student anymore.');</script>";
         }

@@ -68,7 +68,7 @@
           <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
               <div class="table-card">
-                <div class="card-body">
+                <div class="card-body"  style='height: 440px; overflow-y:auto;'>
                   <table class="table " style="width: 70%; margin: auto;">
                     <thead class="thead-light">
                       <tr>
