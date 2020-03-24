@@ -47,7 +47,6 @@
                         <th style=' text-align: center;'scope="col">Schedule</th>
                         <th style=' text-align: left;'scope="col">Instructor</th>
                         <th></th>
-                        <th style=' text-align: center;'scope="col">Enrolled</th>
                         <th></th>
                         <th></th>
                       </tr>
@@ -64,9 +63,6 @@
                             
                             $sc = mysqli_query($conn, "select*from schedules where offered_subject_id =".$o['id']." order by day asc");
                     
-
-                            $s = mysqli_query($conn, "select*from enrolled_students where offering_id=".$o['id']);
-                            $s = mysqli_num_rows($s);
                             $i = mysqli_query($conn, "select*from faculty where id=".$o['faculty_id']);
                             $i = mysqli_fetch_assoc($i);
                             echo "
@@ -88,7 +84,6 @@
                                   <i class='fas fa-pencil-alt'></i>
                                 </button>
                               </td>
-                              <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
                               <td style=' text-align: right;'>
                                 <button onclick='getID(this.id)' value='".$o['id']."' id='O".$o['id']."' type='button' class='btn btn-danger' data-toggle='modal' data-target='#delete-SO-modal'>
                                   <i class='far fa-trash-alt'></i>
@@ -293,7 +288,7 @@
 
   // FOR EDIT AND DELETE MODAL
   function getID(i){
-    var value = $('#'+i+" td:nth-child(7) button").attr('value');
+    var value = $('#'+i+" td:nth-child(6) button").attr('value');
 
     //alert(value);
     $('.id').val(value);

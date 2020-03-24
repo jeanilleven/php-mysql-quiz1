@@ -41,7 +41,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Add</button>
+                          <button type="button" class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
@@ -53,38 +53,60 @@
             <div class="col-lg-12">
               <div class="table-card">
                 <div class="card-body">
-                  <table class="table">
+                <table class="table " style="width: 100%; margin: auto;">
                     <thead class="thead-light">
                       <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Course</th>
-                        <th scope="col">Year</th>
+                        <th style=' text-align: left;' scope="col">ID</th>
+                        <th style=' text-align: left;' scope="col">Course</th>
+                        <th style=' text-align: center;'scope="col">Room</th>
+                        <th style=' text-align: center;'scope="col">Schedule</th>
+                        <th style=' text-align: left;'scope="col">Instructor</th>
+                        <th></th>
+                        <th style=' text-align: center;'scope="col">Enrolled</th>
                         <th></th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark Otto</td>
-                        <td>Computer Science</td>
-                        <td>1</td>
-                        <td></td>
-                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-student-modal">
-                              <i class='far fa-trash-alt'></i>
-                            </button></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Keenan Mendiola</td>
-                        <td>Information Technology</td>
-                        <td>1</td>
-                        <td></td>
-                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-student-modal">
-                              <i class='far fa-trash-alt'></i>
-                            </button></td>
-                      </tr>
+                      <?php
+                        $offerings = mysqli_query($conn, "select * from offered_subjects order by subject_id asc");
+                        foreach($offerings as $o){
+                          if($o['deleted_at']==null){
+                            $c = mysqli_query($conn, "select*from subjects where id = ".$o['subject_id']);
+                            $c = mysqli_fetch_assoc($c);
+                            $r = mysqli_query($conn, "select * from rooms where id =".$o['room_id']);
+                            $r = mysqli_fetch_assoc($r);
+                            
+                            $sc = mysqli_query($conn, "select*from schedules where offered_subject_id =".$o['id']." order by day asc");
+                    
+
+                            $s = mysqli_query($conn, "select*from enrolled_students where offering_id=".$o['id']);
+                            $s = mysqli_num_rows($s);
+                            $i = mysqli_query($conn, "select*from faculty where id=".$o['faculty_id']);
+                            $i = mysqli_fetch_assoc($i);
+                            echo "
+                            <tr id='O".$o['id']."'>
+                              <td style=' text-align: center;'>".$o['id']."</td>
+                              <td style=' text-align: left;'>".$c['code']." ".$c['name']."</td>
+                              <td style=' text-align: center;'>".$r['name']."</td>
+                              <td style=' text-align: center;'>";
+                            while($sched = mysqli_fetch_assoc($sc)){
+                              $day = int_to_day($sched['day']);
+                              $start = int_to_start_time($sched['time_start']);
+                              $end = int_to_start_time($sched['time_end']);
+                              echo $day." ".$start." - ".$end."<br>";
+                            }
+                            
+                            echo "</td>
+                              <td style=' text-align: left;'>".$i['first_name']." ".$i['last_name']."</td>
+                              <td></td>
+                              <td style=' text-align: center;'>".$s."/".$r['capacity']."</td>
+                              </td>
+                            </tr>
+                          ";
+                          } 
+                        }
+                      ?>
                     </tbody>
                   </table>
                 </div>
@@ -95,3 +117,6 @@
   </body>
      
 </html>
+<script>
+
+</script>
