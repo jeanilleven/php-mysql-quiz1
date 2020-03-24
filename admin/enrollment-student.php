@@ -119,7 +119,7 @@
                                 <?php 
                                   $offerings = mysqli_query($conn, "SELECT*FROM offered_subjects where deleted_at is null order by subject_id asc");
                                   while($o = mysqli_fetch_assoc($offerings)){
-                                    $code = mysqli_query($conn, "SELECT*FROM subjects where id = ".$o['id']);
+                                    $code = mysqli_query($conn, "SELECT*FROM subjects where id = ".$o['subject_id']);
                                     $code = mysqli_fetch_assoc($code);
                                     echo "<option value=''>".$o['id']." - ".$code['code']."</option>";
                                   }
