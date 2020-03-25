@@ -45,7 +45,7 @@
 <body style="">
     <div class="container" style='text-align: center'>
             <img height="63"  width="480"src="./pics/nav-logo.png" alt="USC logo" class="mx-auto my-4 mt-5">
-        <div class="col-lg-4 mx-auto " style='text-align: left'>
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 mx-auto " style='text-align: left'>
             <div class="card p-2" style="border: none;">
                 <div class="card-header pt-5" >
                     <h2 style='color: white; font-weight: 300;'>Login</h2>
