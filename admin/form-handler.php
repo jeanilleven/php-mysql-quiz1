@@ -118,9 +118,12 @@
         $faculty = mysqli_real_escape_string($conn, $faculty);
         $subject = mysqli_real_escape_string($conn, $subject);
         $room = mysqli_real_escape_string($conn, $room);
-        $day = mysqli_real_escape_string($conn, $day);
-        $start = mysqli_real_escape_string($conn, $start);
-        $end = mysqli_real_escape_string($conn, $end);
+
+        for($x=0; $x < sizeof($day); $x++){
+            $day[$x] = mysqli_real_escape_string($conn, $day[$x]);
+            $start[$x] = mysqli_real_escape_string($conn, $start[$x]);
+            $end[$x] = mysqli_real_escape_string($conn, $end[$x]);
+        }
         // IN THIS FUNCTION, UPDATE BOTH OFFERED_SUBJECTS AND SCHEDULES TABLE. 
 
         $table = mysqli_query($conn,"SELECT * FROM schedules LEFT JOIN offered_subjects 
@@ -133,13 +136,7 @@
         foreach($day as $key => $value){
             $conflict = 0;
             while($row=mysqli_fetch_assoc($table)){
-                if($start[$key] >= $row['time_start'] && $end[$key] <= $row['time_end']){
-                    $conflict = 1;
-                    break;
-                }else if($end[$key] > $row['time_start'] && $start[$key] < $row['time_end']){
-                    $conflict = 1;
-                    break;
-                }else if($start[$key] > $row['time_end'] && $end[$key] > $row['time_start']){
+                if($start[$key] >= $row['time_start'] || $end[$key] <= $row['time_end']){
                     $conflict = 1;
                     break;
                 }
@@ -206,13 +203,7 @@
             if($conflict==0){
                 while($faculty_sched = mysqli_fetch_assoc($faculty)){
                     if($offering_sched['day']==$faculty_sched['day']){
-                        if($offering_sched['time_start'] >= $faculty_sched['time_start'] && $offering_sched['time_end'] <= $faculty_sched['time_end']){
-                            $conflict = 1;
-                            break;
-                        }else if($offering_sched['time_end'] > $faculty_sched['time_start'] && $offering_sched['time_start'] < $faculty_sched['time_end']){
-                            $conflict = 1;
-                            break;
-                        }else if($offering_sched['time_start'] > $faculty_sched['time_end'] &&$offering_sched['time_end'] > $faculty_sched['time_start']){
+                        if($offering_sched['time_start'] >= $faculty_sched['time_start'] || $offering_sched['time_end'] <= $faculty_sched['time_end']){
                             $conflict = 1;
                             break;
                         }
@@ -264,13 +255,7 @@
                 $sched = mysqli_query($conn, "SELECT*FROM schedules WHERE offered_subject_id = $offered_subj");
                 $sched = mysqli_fetch_assoc($sched);
 
-                if($sched['time_start'] >= $offering_sched['time_start'] && $sched['time_end'] <= $offering_sched['time_end']){
-                    $conflict = 1;
-                    break;
-                }else if($sched['time_end'] > $offering_sched['time_start'] && $sched['time_start'] < $offering_sched['time_end']){
-                    $conflict = 1;
-                    break;
-                }else if($sched['time_start'] > $offering_sched['time_end'] && $sched['time_end'] > $offering_sched['time_start']){
+                if($sched['time_start'] >= $offering_sched['time_start'] || $sched['time_end'] <= $offering_sched['time_end']){
                     $conflict = 1;
                     break;
                 }
