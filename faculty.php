@@ -75,7 +75,7 @@
                             </thead>
                             <tbody>
                             <?php
-                                $query = "SELECT offered_subjects.id, subjects.id AS subject_id, subjects.code, subjects.name AS subject_name, rooms.name AS room_name FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id INNER JOIN rooms ON offered_subjects.room_id=rooms.id WHERE deleted_at IS NULL AND offered_subjects.faculty_id =".$_SESSION['account_id'];                               
+                                $query = "SELECT offered_subjects.id, subjects.id AS subject_id, subjects.code, subjects.name AS subject_name, rooms.name AS room_name FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id INNER JOIN rooms ON offered_subjects.room_id=rooms.id WHERE offered_subjects.deleted_at IS NULL AND offered_subjects.faculty_id =".$_SESSION['account_id'];                               
                                 $res = mysqli_query($conn, $query);
                                 $prev_id = 0;
                                 foreach($res as $r):?>
