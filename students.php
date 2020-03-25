@@ -11,12 +11,15 @@
     }
 
     if(isset($_POST['submit_enrollment'])){
-        $query = '';   
-                                
+        $query = "INSERT INTO enrolled_students(student_id, offered_subject_id, created_at) VALUES ('".$_SESSION['account_id']."', '".$_POST['submit_enrollment']."', now())";   
         $res = mysqli_query($conn, $query);
+        header("Location: ./account.php/?tab=subjects");
     }
 
     if(isset($_POST['submit_unenrollment'])){
+        $query = "UPDATE enrolled_students SET deleted_at=now() WHERE student_id=".$_SESSION['account_id'];   
+        $res = mysqli_query($conn, $query);
+        header("Location: ./account.php/?tab=subjects");
         
     }
 ?>
@@ -76,22 +79,22 @@
                             
                             <!-- GATHER INFORMATION ON STUDENT'S SCHEDULE IN $sched_array -->
                             <?php
-                                $query = 'SELECT offered_subjects.id, subjects.code, subjects.name FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id WHERE offered_subjects.faculty_id='.$_SESSION['account_id'].' AND offered_subjects.deleted_at IS NULL';   
+                                $query = 'SELECT subjects.id, subjects.code, subjects.name FROM enrolled_students INNER JOIN offered_subjects ON enrolled_students.offered_subject_id=offered_subjects.id INNER JOIN subjects ON offered_subjects.subject_id=subjects.id WHERE enrolled_students.student_id='.$_SESSION['account_id'].' AND enrolled_students.deleted_at IS NULL';   
                                 
+                                echo $query;
                                 $res = mysqli_query($conn, $query);
-                                $sched_array = array(array(), array(), array(), array(), array());
+                                $sched_array = array(array(), array(), array(), array(), array() );
 
                                 foreach($res as $r){
-                                    $query = 'SELECT * FROM schedules WHERE offered_subject_id='.$r['id'];   
+                                    $query = 'SELECT * FROM schedules WHERE offered_subject_id='.$r['id']." AND deleted_at IS NULL";   
                                     $sch = mysqli_query($conn, $query);
-
+                                    echo $query;
                                     foreach($sch as $s){
                                         for($x = $s['time_start']; $x <= $s['time_end']; $x++){
                                             $sched_array[$s['day']][$x] = array('name' =>$r['name'], 'code' => $r['code'], 'color' => $colors[$c]);
+                                            echo "lol: ".$sched_array[$s['day']][$x]['name']."</br>";
                                         }
                                     }
-
-                                    $c++;
                                     
                                 }        
                             ?>
@@ -118,14 +121,17 @@
                                     <!-- DETERMINE IF THERE IS A SCHEDULE CONFLICT USING $sched_array -->
                                     <?php 
 
-                                    $is_conflict = true;
+                                    $is_conflict = false;
                                     
-                                    $query = 'SELECT * FROM schedules WHERE offered_subject_id='.$r['id'];   
+                                    $query = 'SELECT * FROM schedules WHERE offered_subject_id='.$r['id'].' AND deleted_at is NULL';  
+                                    // echo $query."</br>"; 
                                     $sch = mysqli_query($conn, $query);
 
                                     foreach($sch as $s){
                                         for($x = $s['time_start']; $x <= $s['time_end']; $x++){
-                                            if(isset($sched_array[$s['day']][$x])){
+                                            // echo $sched_array[ $s['day'] ][$x];
+                                            if(!empty($sched_array[ $s['day'] ][$x]) ){
+                                                
                                                 $is_conflict = true;
                                             }
                                             if($is_conflict){
@@ -162,20 +168,20 @@
                                                 }
                                             ?>
                                             <?php if($count == 0):?>
-                                                <?php if($is_conflict):?>
+                                                <?php if($is_conflict == true):?>
                                                     <button  name="submit_enrollment"  class="btn btn-secondary" disabled>
                                                         Enroll
                                                     </button>
                                                 <?php else:?>
                                                     <form action="./account.php" method="post">
-                                                        <button  name="submit_enrollment" type="submit" class="btn btn-success" value="<?php echo $_SESSION['account_id']?>">
+                                                        <button  name="submit_enrollment" type="submit" class="btn btn-success" value="<?php echo $r['id']?>">
                                                             Enroll
                                                         </button>
                                                     </form>
                                                 <?php endif?>
                                             <?php else:?>
                                                 <form action="./account.php" method="post">
-                                                    <button  name="submit_unenrollment" type="submit" class="btn btn-danger" value="<?php echo $_SESSION['account_id']?>">
+                                                    <button  name="submit_unenrollment" type="submit" class="btn btn-danger" value="<?php echo $r['id']?>">
                                                         Unenroll
                                                     </button>
                                                 </form>
@@ -195,8 +201,8 @@
     <?php elseif($_SESSION['open_tab'] == 'schedule'):?>
 
         <?php
-            $query = 'SELECT offered_subjects.id, subjects.code, subjects.name FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id WHERE offered_subjects.faculty_id='.$_SESSION['account_id'].' AND offered_subjects.deleted_at IS NULL';   
-            
+            $query = 'SELECT offered_subjects.id, subjects.code, subjects.name FROM enrolled_students INNER JOIN offered_subjects ON enrolled_students.offered_subject_id=offered_subjects.id INNER JOIN subjects ON offered_subjects.subject_id=subjects.id WHERE enrolled_students.student_id='.$_SESSION['account_id'].' AND enrolled_students.deleted_at IS NULL';   
+                                
             $res = mysqli_query($conn, $query);
             $sched_array = array(array(), array(), array(), array(), array());
 
