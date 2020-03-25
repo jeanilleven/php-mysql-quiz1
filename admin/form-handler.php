@@ -119,11 +119,7 @@
         $subject = mysqli_real_escape_string($conn, $subject);
         $room = mysqli_real_escape_string($conn, $room);
 
-        for($x=0; $x < sizeof($day); $x++){
-            $day[$x] = mysqli_real_escape_string($conn, $day[$x]);
-            $start[$x] = mysqli_real_escape_string($conn, $start[$x]);
-            $end[$x] = mysqli_real_escape_string($conn, $end[$x]);
-        }
+       
         // IN THIS FUNCTION, UPDATE BOTH OFFERED_SUBJECTS AND SCHEDULES TABLE. 
 
         $table = mysqli_query($conn,"SELECT * FROM schedules LEFT JOIN offered_subjects 

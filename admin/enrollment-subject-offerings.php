@@ -113,7 +113,7 @@
                           </button>
                         </div>
                         <form action="enrollment-subject-offerings.php" method="get">
-                          <div class="modal-body">
+                          <div class="modal-body" style='height:400px; overflow-y:auto;'>
                             <div class="input-group mb-3">
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><i class='far fa-keyboard'></i></span>
