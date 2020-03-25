@@ -68,10 +68,16 @@
 
     function deleteRoom($id, $conn){
         $id = mysqli_real_escape_string($conn, $id);
-        $query = " UPDATE rooms SET deleted_at=now() WHERE id=$id";
-        mysqli_query($conn, $query);
+        $offered = mysqli_query($conn, "SELECT*FROM offered_subjects where room_id = $id and deleted_at is null");
 
-        header('location:manage-rooms.php');
+        if(mysqli_num_rows($offered)){
+            echo "<script>alert('Room is still used for an offered subject. Cannot delete yet. ');</script>";
+        }else{
+            $query = " UPDATE rooms SET deleted_at=now() WHERE id=$id";
+            mysqli_query($conn, $query);
+        }
+        
+
     }
 
     function editRoom($id, $name, $cap, $conn){
@@ -97,9 +103,14 @@
     function removeSubject($id, $conn){
         $id = mysqli_real_escape_string($conn, $id);
 
-        $query = " UPDATE subjects SET deleted_at=now() WHERE id=$id";
-        mysqli_query($conn, $query);
-
+        $offered = mysqli_query($conn, "SELECT*FROM offered_subjects where subject_id = $id and deleted_at is null");
+        
+        if(mysqli_num_rows($offered)){
+            echo "<script>alert('This subject is still being offered. Cannot delete yet.');</script>";
+        }else{
+            $query = " UPDATE subjects SET deleted_at=now() WHERE id=$id and deleted_at is null";
+            mysqli_query($conn, $query);
+        }
     }
 
     function editSubject($id, $name, $code, $conn){
@@ -170,7 +181,7 @@
     function removeSubjOffering($id, $conn){
         $id = mysqli_real_escape_string($conn, $id);
 
-        $s = mysqli_query($conn, "select*from enrolled_students where offered_subject_id=$id");
+        $s = mysqli_query($conn, "select*from enrolled_students where offered_subject_id=$id and deleted_at is null");
 
         if(mysqli_num_rows($s)==0){
             mysqli_query($conn, "UPDATE offered_subjects SET deleted_at = now() WHERE id = $id;");
