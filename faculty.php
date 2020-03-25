@@ -79,7 +79,7 @@
                                 $res = mysqli_query($conn, $query);
                                 $prev_id = 0;
 
-                                while($r=mysqli_fetch_assoc($res)){?>
+                                foreach($res as $r){?>
                                     <!-- /**
                                         *TODO: consider deleted_at 
                                      */ -->
