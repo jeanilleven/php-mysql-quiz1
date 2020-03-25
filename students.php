@@ -69,13 +69,14 @@
     <div class="container" style="margin-top: 20px;">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
-                <h1>SUBJECTS</h1>
+                <h1 style='color: rgb(7, 80, 11);'>SUBJECTS</h1>
             </div>
 
-            <div class="row mx-auto">
+            
+            <div class="row mx auto" style='width: 100%; margin: auto;'>
                 <div class="col-lg-12">
-                    <div class="table-card">
-                        <div class="card-body">
+                    <div class="table-card" style="border: 0.5px solid rgb(60, 95, 61); border-radius: 5px; background-color: rgb(255, 255, 255);">
+                        <div class="card-body" style='height: 440px; overflow-y:auto;'>
                             
                             <!-- GATHER INFORMATION ON STUDENT'S SCHEDULE IN $sched_array -->
                             <?php
@@ -99,7 +100,7 @@
                                     
                                 }        
                             ?>
-                            <table class="table">
+                            <table class="table" style="width: 100%; margin: auto;">
                             <thead class="thead-light">
                                 <tr>
                                 <th scope="col">Subject</th>
@@ -224,36 +225,55 @@
                 
             }        
         ?>
-        <div class="container mt-5">
-            <table style="text-align: center">
-                <thead>
-                    <th style="width:200px; text-align: center">Time</th>
-                    <th style="width:200px; text-align: center">Monday</th>
-                    <th style="width:200px; text-align: center">Tuesday</th>
-                    <th style="width:200px; text-align: center">Wednesday</th>
-                    <th style="width:200px; text-align: center">Thursday</th>
-                    <th style="width:200px; text-align: center">Friday</th>
-                </thead>
-                <tbody>
-                    <?php for($t = 2; $t < 30; $t++):?>
-                        <tr>
-                            <td><?php echo int_to_start_time($t)?></td>
-                            <?php for($d = 1; $d <= 5; $d++):?>
-                                <?php if(isset($sched_array[$d][$t])):?>
-                                    <td style="background-color: <?php echo $sched_array[$d][$t]['color'] ?>; font-weight: 500;border: 1px solid <?php echo $sched_array[$d][$t]['color'] ?>; min-height: 40px; width=150px">
-                                        <?php echo $sched_array[$d][$t]['code']?>
-                                    </td>   
-                                <?php else:?>
-                                    <td style="border: 1px solid grey; height: 20px; width:200px">
+
+
+        <div class="container" style="margin-top: 20px;">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-xs-12">
+                    <h1 style='color: rgb(7, 80, 11); padding-left: 12px;'>SCHEDULE</h1>
+                </div>
+            </div>
+
+            <div class="row " style='width: 100%; margin: auto;'>
+                <div class="col-lg-12 col-sm-12 col-xs-12"">
+                    <div class="table-card" style=" border: 0.5px solid rgb(60, 95, 61); border-radius: 5px; background-color: rgb(255, 255, 255);">
+                        <div class="card-body" style='height: 440px; overflow-y:auto;'>
+                        <table class='table' style="text-align: center">
+                            <thead>
+                                <th style="width:200px; text-align: center">Time</th>
+                                <th style="width:200px; text-align: center">Monday</th>
+                                <th style="width:200px; text-align: center">Tuesday</th>
+                                <th style="width:200px; text-align: center">Wednesday</th>
+                                <th style="width:200px; text-align: center">Thursday</th>
+                                <th style="width:200px; text-align: center">Friday</th>
+                             </thead>
+                            <tbody>
+                            <?php for($t = 2; $t < 30; $t++):?>
+                                <tr>
+                                    <td><?php echo int_to_start_time($t)?></td>
+                                    <?php for($d = 1; $d <= 5; $d++):?>
+                                        <?php if(isset($sched_array[$d][$t])):?>
+                                        <td style="background-color: <?php echo $sched_array[$d][$t]['color'] ?>; font-weight: 500;border: 1px solid <?php echo $sched_array[$d][$t]['color'] ?>; min-height: 40px; width=150px">
+                                            <?php echo $sched_array[$d][$t]['code']?>
+                                        </td>   
+                                        <?php else:?>
+                                        <td style="border: 1px solid grey; height: 20px; width:200px">
                                         
-                                    </td>   
-                                <?php endif?>
-                            <?php endfor?>
-                        </tr>
-                    <?php endfor?>
-                </tbody>
-            </table>
+                                        </td>   
+                                        <?php endif?>
+                                    <?php endfor?>
+                                </tr>
+                                <?php endfor?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="container mt-5">
+            
         </div>
+    
     <?php else:?>
 
     <div class="container">
@@ -269,6 +289,7 @@
     </div>
 
     <?php endif?>
+    
 </body>
      
 </html>
