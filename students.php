@@ -150,7 +150,7 @@
                                         <td style=' text-align: left;'><?php echo $r['room_name']?></td>
                                         <td style=' text-align: left;'>
                                             <?php
-                                                $query = "SELECT * FROM schedules WHERE offered_subject_id=".$r['id'];                               
+                                                $query = "SELECT * FROM schedules WHERE deleted_at IS NULL AND offered_subject_id=".$r['id'];                               
                                                 $scheds = mysqli_query($conn, $query);
                                             ?>
                                             <?php foreach($scheds as $s):?>

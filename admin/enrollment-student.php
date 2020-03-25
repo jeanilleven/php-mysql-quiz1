@@ -52,7 +52,7 @@
                             $sc = mysqli_query($conn, "select*from schedules where offered_subject_id =".$o['id']." order by day asc");
                     
 
-                            $s = mysqli_query($conn, "select*from enrolled_students where offered_subject_id=".$o['id']);
+                            $s = mysqli_query($conn, "select*from enrolled_students where deleted_at is null and offered_subject_id=".$o['id']);
                             $st = mysqli_num_rows($s);
                             $i = mysqli_query($conn, "select*from faculty where id=".$o['faculty_id']);
                             $i = mysqli_fetch_assoc($i);

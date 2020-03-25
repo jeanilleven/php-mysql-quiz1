@@ -55,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <td class="pt-2"><label for="account_password">Password</label></td>
-                                    <td><input id="account_password" name="account_password" type="text" class="ml-3"></td>
+                                    <td><input id="account_password" name="account_password" type="password" class="ml-3"></td>
                                 </tr>
                                 <tr>
                                     <td class="pt-2"></td>

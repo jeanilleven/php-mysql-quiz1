@@ -75,7 +75,7 @@
                             </thead>
                             <tbody>
                             <?php
-                                $query = "SELECT offered_subjects.id, subjects.id AS subject_id, subjects.code, subjects.name AS subject_name, rooms.name AS room_name FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id INNER JOIN rooms ON offered_subjects.room_id=rooms.id WHERE offered_subjects.faculty_id =".$_SESSION['account_id'];                               
+                                $query = "SELECT offered_subjects.id, subjects.id AS subject_id, subjects.code, subjects.name AS subject_name, rooms.name AS room_name FROM offered_subjects INNER JOIN subjects ON offered_subjects.subject_id=subjects.id INNER JOIN rooms ON offered_subjects.room_id=rooms.id WHERE deleted_at IS NULL AND offered_subjects.faculty_id =".$_SESSION['account_id'];                               
                                 $res = mysqli_query($conn, $query);
                                 $prev_id = 0;
                                 foreach($res as $r):?>
@@ -88,7 +88,7 @@
                                         <td style=' text-align: left;'><?php echo $r['room_name']?></td>
                                         <td style=' text-align: left;'>
                                             <?php
-                                                $query = "SELECT * FROM schedules WHERE offered_subject_id=".$r['id'];                               
+                                                $query = "SELECT * FROM schedules WHERE deleted_at IS NULL AND offered_subject_id=".$r['id'];                               
                                                 $scheds = mysqli_query($conn, $query);
                                             ?>
                                             <?php foreach($scheds as $s):?>
@@ -153,7 +153,7 @@
             $colors = ['#CC99C9', '#9EC1CF', '#9EE09E', '#FDFD97', '#FEB144', '#FF6663'];
 
             foreach($res as $r){
-                $query = 'SELECT * FROM schedules WHERE offered_subject_id='.$r['id'];   
+                $query = 'SELECT * FROM schedules WHERE deleted_at IS NULL AND offered_subject_id='.$r['id'];   
                 $sch = mysqli_query($conn, $query);
 
                 foreach($sch as $s){
