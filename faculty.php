@@ -79,7 +79,7 @@
                                 $res = mysqli_query($conn, $query);
                                 $prev_id = 0;
 
-                                foreach($res as $r):?>
+                                while($r=mysqli_fetch_assoc($res)){?>
                                     <!-- /**
                                         *TODO: consider deleted_at 
                                      */ -->
@@ -132,7 +132,7 @@
                                             </div>
                                         </td>
                                     </tr> 
-                                <?php endforeach?>
+                                <?php }?>
                             </tbody>
                             </table>
                         </div>

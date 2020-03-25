@@ -52,7 +52,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" name="add-subject-btn" value="1"class="btn btn-primary">Add</button>
+                          <button type="submit" name="add-subject-btn" value="1"class="btn btn-success">Add</button>
                         </div>
                         </form>
                       </div>
@@ -74,9 +74,8 @@
                     </thead>
                     <tbody>
                       <?php
-                        $subjs = mysqli_query($conn, "select * from subjects order by code asc");
-                        foreach($subjs as $s){
-                          if($s['deleted_at']==null){
+                        $subjs = mysqli_query($conn, "select * from subjects where deleted_at is null  order by code asc");
+                        while($s = mysqli_fetch_assoc($subjs)){
                             echo "
                             <tr id='S".$s['id']."'>
                               <td style=' text-align: left;'>".$s['code']."</td>
@@ -88,7 +87,6 @@
                               </td>
                             </tr>
                           ";
-                          } 
                         }
                       ?>
                     </tbody>
