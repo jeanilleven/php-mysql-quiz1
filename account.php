@@ -26,8 +26,6 @@
     }else{
 
         $account_query = "SELECT * FROM ".$_SESSION['account_type']." WHERE id=".$_SESSION['account_id']." AND password='".$_SESSION['account_password']."'";
-        
-        echo $account_query;
 
         $res = $conn->query($account_query);
         $conn->close();
