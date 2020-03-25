@@ -79,20 +79,21 @@
                             
                             <!-- GATHER INFORMATION ON STUDENT'S SCHEDULE IN $sched_array -->
                             <?php
-                                $query = 'SELECT subjects.id, subjects.code, subjects.name FROM enrolled_students INNER JOIN offered_subjects ON enrolled_students.offered_subject_id=offered_subjects.id INNER JOIN subjects ON offered_subjects.subject_id=subjects.id WHERE enrolled_students.student_id='.$_SESSION['account_id'].' AND enrolled_students.deleted_at IS NULL';   
+                                $query = 'SELECT offered_subjects.id, subjects.code, subjects.name FROM enrolled_students INNER JOIN offered_subjects ON enrolled_students.offered_subject_id=offered_subjects.id INNER JOIN subjects ON offered_subjects.subject_id=subjects.id WHERE enrolled_students.student_id='.$_SESSION['account_id'].' AND enrolled_students.deleted_at IS NULL';   
                                 
-                                echo $query;
+                                // echo "</br>Get student's sunrolled subjects: ".$query;
                                 $res = mysqli_query($conn, $query);
                                 $sched_array = array(array(), array(), array(), array(), array() );
 
                                 foreach($res as $r){
                                     $query = 'SELECT * FROM schedules WHERE offered_subject_id='.$r['id']." AND deleted_at IS NULL";   
                                     $sch = mysqli_query($conn, $query);
-                                    echo $query;
+
+                                    // echo "</br>Get student's schedule: ".$query;
+                                    
                                     foreach($sch as $s){
                                         for($x = $s['time_start']; $x <= $s['time_end']; $x++){
-                                            $sched_array[$s['day']][$x] = array('name' =>$r['name'], 'code' => $r['code'], 'color' => $colors[$c]);
-                                            echo "lol: ".$sched_array[$s['day']][$x]['name']."</br>";
+                                            $sched_array[$s['day']][$x] = array('name' =>$r['name']);
                                         }
                                     }
                                     
