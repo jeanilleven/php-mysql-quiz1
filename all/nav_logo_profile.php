@@ -6,7 +6,7 @@
         <span style='color:#07500b; ' id='user-id'><?php echo sprintf("%08d", $_SESSION['account_id']) ?></span>
             </a>
                 <span class='dropdown-menu' aria-labelledby='user-dropdown'>
-            <a class='dropdown-item' data-toggle='modal' data-target='#change-pw-modal' type='button' style='cursor:pointer'>Change Password</a>
+            <!-- <a class='dropdown-item' data-toggle='modal' data-target='#change-pw-modal' type='button' style='cursor:pointer'>Change Password</a> -->
             <a class='dropdown-item' href='./account.php/?end=true'>Logout</a>
         </span>
     </span>
@@ -22,32 +22,38 @@
                 <span aria-hidden='true'>&times;</span>
                 </button>
             </div>
-            <div class='modal-body'>
+
+            
+            <!-- <div class='modal-body'>
             <form>
                 <div class='input-group mb-3'>
                 <div class='input-group-prepend'>
                     <span class='input-group-text' id='old_pw'><i class='fas fa-lock'></i></span>
                 </div>
-                <input name='old-pw' type='password' class='form-control' placeholder='Old Password' aria-label='Old Password' aria-describedby='basic-addon1'>
+                <input required id="curr-pw" style="display: none" value='<?php echo $_SESSION['account_password']?>'>
+                <input required  id="old-pw" name='old-pw' type='password' class='form-control' placeholder='Old Password' aria-label='Old Password' aria-describedby='basic-addon1'>
                 </div>
                 <div class='input-group mb-3'>
                 <div class='input-group-prepend'>
                     <span class='input-group-text' id='old_pw'><i class='fas fa-lock'></i></span>
                 </div>
-                <input name='new-pw' type='password' class='form-control' placeholder='New Password' aria-label='pw1' aria-describedby='basic-addon1'>
+                <input required id="new-pw" name='new-pw' type='password' class='form-control' placeholder='New Password' aria-label='pw1' aria-describedby='basic-addon1'>
                 </div>
                 <div class='input-group mb-3'>
                 <div class='input-group-prepend'>
                     <span class='input-group-text' id='old_pw'><i class='fas fa-lock'></i></span>
                 </div>
-                <input name='pw2' type='password' class='form-control' placeholder='Confirm Password' aria-label='pw2' aria-describedby='basic-addon1'>
+                <input required  id="pw2" name='pw2' type='password' class='form-control' placeholder='Confirm Password' aria-label='pw2' aria-describedby='basic-addon1'>
                 </div>
-            </div>
+            </div> -->
+
+
             <div class='modal-footer'>
                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                <button type='submit' class='btn btn-primary'>Save changes</button>
+                <button id="submit_change_password" name="submit_change_password" type='submit' class='btn btn-primary'>Save changes</button>
             </div>
             </form>
+
         </div>
     </div>
 </div>
@@ -63,3 +69,5 @@ $('a').on("click", ()=>{
     $('this').css("background-color", "#a1a7ad");
 })
 </script>
+
+<script src="./all/password_checker.js"></script>

@@ -33,6 +33,17 @@
 
         if($res && $res->num_rows > 0){
             // source php will be included/copy-pasted here which means the $_SESSION variables above are accessible
+            
+            // CHANGE PASSWORD
+            if(isset($_POST['submit_change_password'])){
+                $query = "UPDATE ".$_SESSION['account_type']." SET password=".md5($_POST['new-pw']).", updated_at=now() WHERE id=".$_SESSION['account_id'];
+                // echo $account_query;
+        
+                $res = $conn->query($query);
+                $conn->close();
+            }
+
+            
             include $_SESSION['account_type'].'.php';
             // echo 'logged in';
         }else{
