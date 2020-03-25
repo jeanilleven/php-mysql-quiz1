@@ -9,6 +9,16 @@
         
         header("location: ../account.php");
     }
+
+    if(isset($_POST['submit_enrollment'])){
+        $query = '';   
+                                
+        $res = mysqli_query($conn, $query);
+    }
+
+    if(isset($_POST['submit_unenrollment'])){
+        
+    }
 ?>
 
 
@@ -105,6 +115,29 @@
                                         *TODO: consider deleted_at 
                                      */ -->
                                         
+                                    <!-- DETERMINE IF THERE IS A SCHEDULE CONFLICT USING $sched_array -->
+                                    <?php 
+
+                                    $is_conflict = true;
+                                    
+                                    $query = 'SELECT * FROM schedules WHERE offered_subject_id='.$r['id'];   
+                                    $sch = mysqli_query($conn, $query);
+
+                                    foreach($sch as $s){
+                                        for($x = $s['time_start']; $x <= $s['time_end']; $x++){
+                                            if(isset($sched_array[$s['day']][$x])){
+                                                $is_conflict = true;
+                                            }
+                                            if($is_conflict){
+                                                break;
+                                            }
+                                        }
+                                        if($is_conflict){
+                                            break;
+                                        }
+                                    }
+                                                                        
+                                    ?>
                                     <tr>
                                         <td style=' text-align: left;'>[<?php echo $r['code']?>] <?php echo $r['subject_name'] ?></td>
                                         <td style=' text-align: left;'><?php echo $r['room_name']?></td>
@@ -121,32 +154,32 @@
                                         <td style=' text-align: left;'>
                                             <?php 
                                                 $query = "SELECT COUNT(*) FROM enrolled_students WHERE offered_subject_id=".$r['id']." AND student_id=".$_SESSION['account_id']." AND deleted_at IS NULL";
-                                                echo $query;
+                                                // echo $query;
                                                 $studs = mysqli_query($conn, $query);
                                                 $count = 0;
                                                 foreach($studs as $st){
                                                     $count = $st['COUNT(*)'];
                                                 }
                                             ?>
-                                            <?php if($count != 0):?>
-                                                <button  name="submit_enrollment"  class="btn btn-secondary" disabled>
-                                                    Enroll
-                                                </button>
+                                            <?php if($count == 0):?>
+                                                <?php if($is_conflict):?>
+                                                    <button  name="submit_enrollment"  class="btn btn-secondary" disabled>
+                                                        Enroll
+                                                    </button>
+                                                <?php else:?>
+                                                    <form action="./account.php" method="post">
+                                                        <button  name="submit_enrollment" type="submit" class="btn btn-success" value="<?php echo $_SESSION['account_id']?>">
+                                                            Enroll
+                                                        </button>
+                                                    </form>
+                                                <?php endif?>
                                             <?php else:?>
                                                 <form action="./account.php" method="post">
-                                                    <button  name="submit_unenrollment" type="submit" class="btn btn-danger">
+                                                    <button  name="submit_unenrollment" type="submit" class="btn btn-danger" value="<?php echo $_SESSION['account_id']?>">
                                                         Unenroll
                                                     </button>
                                                 </form>
                                             <?php endif?>
-                                            
-                                                <form action="./account.php" method="post">
-                                                    <button  name="submit_enrollment" type="submit" class="btn btn-success">
-                                                        Enroll
-                                                    </button>
-                                                </form>
-
-
                                         </td>
                                     </tr> 
                                 <?php endforeach?>
