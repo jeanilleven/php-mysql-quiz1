@@ -31,8 +31,9 @@
         input, select {
             border-radius: 5px;
             border: none;
-            height: 30px;
+            height: 35px;
             padding-left: 5px;
+            margin: 5px
         }
 
         #submit {
