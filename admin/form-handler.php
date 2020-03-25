@@ -6,10 +6,15 @@
     function removeStudent($id, $conn){
 
         $id = mysqli_real_escape_string($conn, $id);
-        $query = "UPDATE students SET deleted_at = now() WHERE id = $id";
-        mysqli_query($conn, $query);
 
+        $enrolled = mysqli_query($conn, "select*from enrolled_students where id = $id and deleted_at is null");
 
+        if(mysqli_num_rows($enrolled)){
+            echo "<script>alert('Student is still enrolled from an offered subject. Cannot delete.');</script>";
+        }else{
+            $query = "UPDATE students SET deleted_at = now() WHERE id = $id";
+            mysqli_query($conn, $query);
+        }
     }
 
     function addStudent($fname, $lname, $gender, $course, $year, $conn){
