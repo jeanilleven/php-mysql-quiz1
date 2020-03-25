@@ -13,7 +13,7 @@
     if(isset($_POST['submit_login'])){
         $_SESSION['account_id'] = $_POST['account_id'];
         $_SESSION['account_type'] = $_POST['account_type'];
-        $_SESSION['account_password'] = $_POST['account_password'];
+        $_SESSION['account_password'] = md5($_POST['account_password']);
         $_SESSION['open_tab'] = 'home'; // save current tab into this variable
     }
  
@@ -24,17 +24,25 @@
         include 'home.php';
         //header('location: ./admin/home.php');
     }else{
-        $_SESSION['account_password'] = md5($_SESSION['account_password']);
+
         $account_query = "SELECT * FROM ".$_SESSION['account_type']." WHERE id=".$_SESSION['account_id']." AND password='".$_SESSION['account_password']."'";
+        
+        echo $account_query;
+
         $res = $conn->query($account_query);
         $conn->close();
 
         if($res && $res->num_rows > 0){
-
             // source php will be included/copy-pasted here which means the $_SESSION variables above are accessible
             include $_SESSION['account_type'].'.php';
         }else{
-            header('Location: ./index.php/?err=1');
+            /**
+             * 
+             * todo: handle errors
+             */
+            // header('Location: ../index.php');
+
+            echo 'hello';
         }
     }
 
