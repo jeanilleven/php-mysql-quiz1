@@ -15,6 +15,8 @@
             $query = "UPDATE students SET deleted_at = now() WHERE id = $id";
             mysqli_query($conn, $query);
         }
+
+        header("location: manage-students.php");
     }
 
     function addStudent($fname, $lname, $gender, $course, $year, $conn){
@@ -26,7 +28,7 @@
         $pw = md5($fname);
         $query = "INSERT INTO students(first_name, last_name, password, gender, course, year, created_at) VALUES('$fname','$lname','$pw','$gender','$course','$year', now() )";
         mysqli_query($conn, $query);
-
+        header("location: manage-students.php");
     }
 
     // Manage Faculty Functions
@@ -43,6 +45,8 @@
         $pw = md5($fname);
         $query = "INSERT INTO faculty(first_name, last_name, email, gender,password, start_term, start_year, created_at) VALUES('$fname','$lname', '$email','$gender','$pw' ,'$term','$year', now() )";
         mysqli_query($conn, $query);
+
+        header("location: manage-faculty.php");
     }
 
     function removeFaculty($id, $conn){
@@ -58,7 +62,7 @@
             mysqli_query($conn, $query);
         }
         
-
+        header("location: manage-faculty.php");
     }
 
 
@@ -68,7 +72,7 @@
         $$capacity = mysqli_real_escape_string($conn, $$capacity);
         $query = "INSERT INTO rooms(name, capacity, created_at) VALUES('$room', '$capacity', now())";
         mysqli_query($conn, $query);
-
+        header("location: manage-rooms.php");
     }
 
     function deleteRoom($id, $conn){
@@ -82,7 +86,7 @@
             mysqli_query($conn, $query);
         }
         
-
+        header("location: manage-rooms.php");
     }
 
     function editRoom($id, $name, $cap, $conn){
@@ -92,7 +96,7 @@
 
         $query = "UPDATE rooms SET name='$name', capacity='$cap', updated_at=now() WHERE id=$id";
         mysqli_query($conn, $query);
-
+        header("location: manage-rooms.php");
     }
 
     // Enrollment - Subjects Functions
@@ -102,7 +106,7 @@
 
         $query = "INSERT INTO subjects(name, code) VALUES('$name', '$code')";
         mysqli_query($conn, $query);
-
+        header("location: enrollment-subjects.php");
     }
 
     function removeSubject($id, $conn){
@@ -116,6 +120,7 @@
             $query = " UPDATE subjects SET deleted_at=now() WHERE id=$id and deleted_at is null";
             mysqli_query($conn, $query);
         }
+        header("location: enrollment-subjects.php");
     }
 
     function editSubject($id, $name, $code, $conn){
@@ -125,7 +130,7 @@
 
         $query = "UPDATE subjects SET name='$name', code='$code', updated_at=now() WHERE id=$id";
         mysqli_query($conn, $query);
-
+        header("location: enrollment-subjects.php");
     }
 
     // Enrollment - Subject Offerings Functions
@@ -180,7 +185,7 @@
                                 VALUES('$id','$d', '$s', '$e', now() )");
                 }
             }
-        
+        header("location: enrollment-subject-offerings.php");
     }
 
     function removeSubjOffering($id, $conn){
@@ -194,6 +199,7 @@
         }else{
             echo "<script>alert('Students should unenroll from this Subject Offering if you wish to proceed.');</script>";
         }
+        header("location: enrollment-subject-offerings.php");
     }
 
     function editFacultySubjOffering($id, $faculty_id, $conn){
@@ -232,6 +238,8 @@
             $query = "UPDATE offered_subjects SET faculty_id = '$faculty_id', updated_at = now() WHERE id = $id ";
             mysqli_query($conn, $query);
         }
+
+        header("location: enrollment-subject-offerings.php");
     }
 
 
@@ -283,6 +291,8 @@
         }else{
             echo "<script>alert('Slots were all taken. Cannot enroll student anymore.');</script>";
         }
+
+        header("location: enrollment-subject-offerings.php");
     }
 
 ?>
